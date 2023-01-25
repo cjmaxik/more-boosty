@@ -1,0 +1,23 @@
+{
+    "options_title": {
+        "message": "Параметры"
+    },
+    "options_full_layout": {
+        "message": "Широкоформатный режим"
+    },
+    "options_max_video_quality": {
+        "message": "Максимальное качество видео"
+    },
+    "options_max_video_quality_desc": {
+        "message": "только для плеера VK"
+    },
+    "options_theater_mode": {
+        "message": "Режим кинотеатра"
+    },
+    "options_theater_mode_desc": {
+        "message": "для стримов, скролл вниз для верхнего меню"
+    },
+    "options_saved": {
+        "message": "Параметры сохраняются автоматически"
+    }
+}
