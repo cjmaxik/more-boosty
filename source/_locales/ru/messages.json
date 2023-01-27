@@ -19,5 +19,11 @@
     },
     "options_saved": {
         "message": "Параметры сохраняются автоматически"
+    },
+    "options_boosty_link": {
+        "message": "Поддержи проект на Бусти!"
+    },
+    "options_github_link": {
+        "message": "Исходный код"
     }
 }

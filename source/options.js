@@ -12,13 +12,22 @@ if (window.matchMedia &&
 
 async function init() {
     await optionsStorage.syncForm('#options-form');
-    getMessage();
 }
 
-function getMessage() {
-    document.querySelectorAll('[data-locale]').forEach(elem => {
-        elem.innerText = chrome.i18n.getMessage(elem.dataset.locale)
+// Locales
+document.querySelectorAll('[data-locale]').forEach(elem => {
+    elem.innerText = chrome.i18n.getMessage(elem.dataset.locale)
+})
+
+// Links
+const links = document.getElementsByClassName('openURL')
+Array.from(links).forEach((element) => {
+    element.addEventListener('click', (event) => {
+        event.preventDefault();
+        const url = event.target.getAttribute('href')
+        if (url) chrome.tabs.create({ url })
     })
-}
+})
+
 
 init();

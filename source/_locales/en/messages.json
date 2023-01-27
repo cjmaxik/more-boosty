@@ -1,1 +1,29 @@
-{}
+{
+    "options_title": {
+        "message": "Options"
+    },
+    "options_full_layout": {
+        "message": "Widescreen layout"
+    },
+    "options_max_video_quality": {
+        "message": "Max video quailty"
+    },
+    "options_max_video_quality_desc": {
+        "message": "for VK video player only"
+    },
+    "options_theater_mode": {
+        "message": "Theater mode"
+    },
+    "options_theater_mode_desc": {
+        "message": "for streams, scroll down for the top menu"
+    },
+    "options_saved": {
+        "message": "Options are saved automatically"
+    },
+    "options_boosty_link": {
+        "message": "Support this project on Boosty!"
+    },
+    "options_github_link": {
+        "message": "Source code"
+    }
+}
