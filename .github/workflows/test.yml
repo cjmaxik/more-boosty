@@ -1,5 +1,9 @@
 name: Test
 
+on:
+  workflow_dispatch: null
+
+
 jobs:
   security:
     runs-on: ubuntu-latest
