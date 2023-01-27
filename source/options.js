@@ -29,5 +29,4 @@ Array.from(links).forEach((element) => {
     })
 })
 
-
 init();

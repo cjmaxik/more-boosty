@@ -1,7 +1,7 @@
 # More Boosty
 ![logo](source/icon.png)
 
-> Chrome / Chromium / Firefox extension to provide more functions and features for a crowdfunding platform Boosty.
+> Chrome / Chromium extension to provide more functions and features for a crowdfunding platform Boosty.
 
 ## Features
 - Widescreen layout
@@ -11,6 +11,9 @@
 
 ## Installation
 *TO BE FILLED...*
+
+### Firefox support when?
+Unfortunately, Firefox does not support some important stuff (namely, PiP API and background service workers), so I will have to find a way to build the extension for Firefox with appropriate workarounds. And it **must** be auto-magical.
 
 ## Credits
 This extension is created using [fregante/browser-extension-template](https://github.com/fregante/browser-extension-template).

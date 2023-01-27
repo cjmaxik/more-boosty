@@ -9,7 +9,7 @@
     "browser_specific_settings": {
         "gecko": {
             "id": "more-boosty@cjmaxik.ru",
-            "strict_min_version": "100.0"
+            "strict_min_version": "109.0"
         }
     },
     "icons": {
@@ -38,5 +38,9 @@
     "options_ui": {
         "browser_style": true,
         "page": "options.html"
+    },
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
     }
 }
