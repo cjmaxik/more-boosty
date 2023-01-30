@@ -7,6 +7,7 @@
         "lint:css": "stylelint source/**/*.css",
         "lint:js": "xo",
         "test": "run-p lint:* build",
+        "build": "npm run clean && parcel build source/manifest.json --no-content-hash --no-source-maps --dist-dir distribution --no-cache --detailed-report 0",
         "watch": "npm run clean && parcel watch source/manifest.json --host localhost --dist-dir distribution --no-cache"
     },
     "browserslist": [
