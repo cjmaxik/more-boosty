@@ -10,7 +10,7 @@
 - Theater mode (for Boosty streams)
 
 ## Installation
-*TO BE FILLED...*
+-  [Chrome/Chromium](https://chrome.google.com/webstore/detail/more-boosty/kpcbalinpdhnlgonfoflhflnfgcbffbl) 
 
 ### Firefox support when?
 Unfortunately, Firefox does not support some important stuff (namely, PiP API and background service workers), so I will have to find a way to build the extension for Firefox with appropriate workarounds. And it **must** be auto-magical.

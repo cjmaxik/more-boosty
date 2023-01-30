@@ -1,8 +1,7 @@
 {
     "private": true,
     "scripts": {
-        "clean": "rimraf distribution",
-        "build": "npm run clean && parcel build source/manifest.json --no-content-hash --no-source-maps --dist-dir distribution --no-cache --detailed-report 0",
+        "clean": "shx rm -rf distribution",
         "lint": "run-p lint:*",
         "lint-fix": "run-p 'lint:* -- --fix'",
         "lint:css": "stylelint source/**/*.css",
@@ -33,9 +32,10 @@
     },
     "devDependencies": {
         "@parcel/config-webextension": "^2.8.3",
+        "dot-json": "^1.2.2",
         "npm-run-all": "^4.1.5",
         "parcel": "^2.8.3",
-        "rimraf": "^4.1.2",
+        "shx": "^0.3.4",
         "stylelint": "^14.16.1",
         "stylelint-config-xo": "^0.21.1",
         "xo": "^0.53.1"
