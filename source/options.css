@@ -19,3 +19,9 @@ body.dark {
 form {
     padding-bottom: 15px;
 }
+
+@-moz-document url-prefix('') {
+    body.dark {
+        --bg-color: #23222b;
+    }
+}

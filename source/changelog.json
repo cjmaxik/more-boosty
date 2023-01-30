@@ -1,0 +1,30 @@
+{
+    "latest": {
+        "ru": [
+            "Полностью переработанная логика - должно работать быстрее, выше, сильнее!",
+            "Кнопка параметров расширения переехала в меню пользователя (справа сверху)",
+            "На ее месте - кнопка с информацией, которую ты сейчас и читаешь :)",
+            "Обновление зависимостей 🧑‍💻"
+        ],
+        "en": [
+            "Logic has been completely rebuilt - it should be better, faster, stronger!",
+            "Options button has been moved to the user menu (top right)",
+            "In its place - button with this very information :)",
+            "Dependencies update 🧑‍💻"
+        ]
+    },
+    "previous": {
+        "ru": [
+            "Первая версия 🎉"
+        ],
+        "en": [
+            "First release 🎉"
+        ],
+    },
+    "track": {
+        "producer": "Sev7n Noizes",
+        "name": "The Voice (Original Mix)",
+        "youtube": "https://youtu.be/LkfWP2lIZNk",
+        "spotify": "https://open.spotify.com/track/49i2L4ST7BTH9NASvDcFkX?si=da5c9587080c4d0f"
+    }
+}

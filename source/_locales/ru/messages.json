@@ -25,5 +25,24 @@
     },
     "options_github_link": {
         "message": "Исходный код"
+    },
+    "content_about": {
+        "message": "О расширении More Boosty"
+    },
+    "content_options_link": {
+        "message": "Параметры More Boosty",
+        "description": "`More Boosty` - название расширения. Не переводить! `Параметры` - перевод понятия Options для настроек расширений в Chrome."
+    },
+    "content_pip": {
+        "message": "Картинка-в-картинке"
+    },
+    "changelog_latest_version": {
+        "message": "Вот что новенького:"
+    },
+    "changelog_previous_version": {
+        "message": "В предыдущих обновлениях:"
+    },
+    "changelog_track_of_the_update": {
+        "message": "Музыкальный трек обновления:"
     }
 }

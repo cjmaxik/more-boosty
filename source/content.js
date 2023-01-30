@@ -1,167 +1,102 @@
 import optionsStorage from './options-storage.js'
-let options
-let body
-let App
-let topMenu
-let isFirefox
+import * as domHelpers from './domHelpers'
 
-console.log('💈 Content script loaded for', chrome.runtime.getManifest().name)
-async function init() {
+// Classes and tag names
+const optionsInMenuBaseClass = 'MiniProfile_dropdownContainer_'
+const topMenuLeftBaseClass = 'TopMenu_left_'
+const streamPageBaseClass = 'StreamPage_block_'
+const vkVideoPlayerElement = 'vk-video-player'
+
+// Global variables
+let options
+let theaterMode = false
+
+/**
+ * Main function
+ * @async
+ */
+const main = async () => {
     options = await optionsStorage.getAll()
 
-    // Background service workers and PiP API aren't working in Firefox.
-    // I don't want to add `tabs` permission just to open options page.
-    isFirefox = await detectFirefox()
-    if (!isFirefox) optionsButton()
+    // 1. Permanent changes
 
-    // Instant execution
-    if (options.full_layout) {
-        full_layout()
-    } else {
-        console.log('💈 Full Layout is disabled')
+    // Inject extension icon to the top left menu
+    const topMenuLeft = document.querySelector(`div[class^=${topMenuLeftBaseClass}]`)
+    domHelpers.injectIconInTopMenu(topMenuLeft)
+
+    // Inject VK video player changes (if loaded directly)
+    const videoPlayer = document.querySelectorAll(vkVideoPlayerElement)
+    for (const player of videoPlayer) {
+        domHelpers.injectVkPlayerChanges(player, options)
     }
 
-    // Deffered execution (via MutationObserver)
-    initPage()
-}
+    // Inject stream page stuff (if loaded directly)
+    if (options.theater_mode && !theaterMode) {
+        const streamPageBlock = document.querySelector(`div[class^=${streamPageBaseClass}]`)
 
-async function detectFirefox() {
-    const runtime = await chrome.runtime.getManifest()
-    return runtime.options_ui.page.includes("moz-extension")
-}
+        if (streamPageBlock) {
+            domHelpers.injectStreamPageChanges(true)
+            theaterMode = true
+        }
+    }
 
-// Options button in top menu
-function optionsButton() {
-    const topMenu_left = document.querySelector('div[class^=TopMenu_left_xpNO0]')
+    // Apply widescreen layout (if enabled)
+    if (options.full_layout) domHelpers.injectFullLayout()
 
-    const optionsButton = `
-            <div class="TopMenu_messageContainer_bwglz" style="padding-left: 10px;">
-                <a class="TopMenu_messagesContainer_hzgjz" href="#" id="MB_options">
-                    <span class="Icon_block_Hvwi5 TopMenu_iconMessages_zy_w6">
-                        <svg class="Icon_svg__DRUh"><use xlink:href="#svg-icon-gear"></use></svg>
-                    </span>
-                    <span class="TopMenu_messageCaption_s_h7T">More Boosty</span>
-                </a>
-            </div>
-        `
+    // 2. Dynamic changes
+    const observer = new MutationObserver((mutations, _observer) => {
+        try {
+            for (const mutation of mutations) {
+                // Checking added elements
+                for (const node of mutation.addedNodes) {
+                    // 1. Checking for whole elements
 
-    topMenu_left.lastElementChild.insertAdjacentHTML('afterEnd', optionsButton)
-    const newButton = document.querySelector('a#MB_options')
-    newButton.addEventListener('click', () => {
-        chrome.runtime.sendMessage({ "action": "openOptionsPage" })
+                    // Inject VK video player changes
+                    if (node.tagName === vkVideoPlayerElement.toUpperCase()) {
+                        domHelpers.injectVkPlayerChanges(node, options)
+                        continue
+                    }
+
+                    // 2. Checking for classes only
+                    if (!node.classList || !node.classList.length) continue
+                    const classes = node.classList.value
+
+                    // Inject extension options link to the menu
+                    if (classes.includes(optionsInMenuBaseClass)) {
+                        domHelpers.injectOptionsLink(node)
+                        continue
+                    }
+
+                    // Inject stream page stuff
+                    if (classes.includes('StreamPage_block_') && options.theater_mode && !theaterMode) {
+                        domHelpers.injectStreamPageChanges(true)
+                        theaterMode = true
+                    }
+                }
+
+                // Checking removed elements
+                for (const node of mutation.removedNodes) {
+                    // 1. Checking for classes only
+                    if (!node.classList || !node.classList.length) continue
+                    const classes = node.classList.value
+
+                    if (classes.includes('StreamPage_block_') && options.theater_mode && theaterMode) {
+                        domHelpers.injectStreamPageChanges(false)
+                        theaterMode = false
+                    }
+                }
+            }
+        } catch (error) {
+            console.log('uncaught mutation error', error)
+        }
+    })
+
+    observer.observe(document, {
+        childList: true,
+        subtree: true,
+        attributes: true
     })
 }
 
-function initPage() {
-    // Observer for VK Player
-    if (!App) App = document.querySelector('div[class^=App_app_]')
-    new MutationObserver(() => {
-        prepareVideo()
-    }).observe(App, { subtree: true, childList: true })
-
-    if (options.theater_mode) {
-        // Stream page
-        if (!body) body = document.querySelector('body')
-        if (location.href.includes('streams/video_stream')) {
-            body.classList.add('MB_stream')
-            window.addEventListener("scroll", scrollEvent);
-        } else {
-            body.classList.remove('MB_stream')
-            window.removeEventListener("scroll", scrollEvent);
-        }
-    } else {
-        console.log('💈 Theater Mode is disabled')
-    }
-}
-
-// For Theater Mode
-function scrollEvent() {
-    let scroll = this.scrollY;
-
-    if (!topMenu) {
-        topMenu = document.querySelector('div#topMenu')
-    }
-
-    if (scroll >= 1) {
-        topMenu.classList.add('MB_scrolled')
-    } else {
-        topMenu.classList.remove('MB_scrolled')
-    }
-}
-
-function prepareVideo() {
-    const videoPlayer = document.querySelectorAll("vk-video-player:not(.MB_done)")
-
-    if (!videoPlayer) {
-        console.error('Cannot find `vk-video-player`, aborting `prepareVideo`')
-        return
-    }
-
-    videoPlayer.forEach(player => {
-        const player_wrapper = player.shadowRoot.querySelector('div.player-wrapper')
-        player_wrapper.addEventListener('click', prepareVideoPlayer, { once: true })
-        player.classList.add('MB_done')
-    });
-}
-
-function prepareVideoPlayer(event) {
-    const player = event.currentTarget.parentElement
-    const controls = player.querySelector('div.controls')
-
-    if (document.pictureInPictureEnabled) {
-        // PIP Spawn
-        const pipButton = `
-                <div class="container controls-element v-1fkqq1h MB_pip">
-                    <div role="button" tabindex="0">
-                        <svg class="icon v-daygaf" xmlns="http://www.w3.org/2000/svg">
-                            <g fill="#fff" fill-rule="evenodd">
-                            <path class="_enter" d="M18 11 10 11 10 17 18 17 18 11 18 11ZM22 19 22 4.98C22 3.88 21.1 3 20 3L2 3C.9 3 0 3.88 0 4.98L0 19C0 20.1.9 21 2 21L20 21C21.1 21 22 20.1 22 19L22 19ZM20 19.02 2 19.02 2 4.97 20 4.97 20 19.02 20 19.02Z"></path>
-                        </svg>
-                    </div>
-                </div>
-                <div class="container controls-element v-1fkqq1h"></div>
-            `
-        controls.lastElementChild.insertAdjacentHTML('beforeBegin', pipButton)
-
-        const newButton = player.querySelector('div.MB_pip')
-        newButton.addEventListener('click', pip)
-    }
-
-    // Max Video Quality
-    if (options.max_video_quality) {
-        const item_quality = player.querySelectorAll('li.item-quality')
-        item_quality[0].click()
-    }
-}
-
-function pip(event) {
-    console.log(event)
-
-    // TODO: find a better way to query this wrapper
-    const playerWrapper = event.currentTarget.parentElement.parentElement.parentElement
-    const video = playerWrapper.querySelector('video')
-
-    if (document.pictureInPictureElement) {
-        document.exitPictureInPicture();
-    } else if (document.pictureInPictureEnabled) {
-        video.requestPictureInPicture();
-    }
-}
-
-function full_layout() {
-    document.querySelector('body').classList.add('MB_active')
-}
-
-// Check if URL has changed
-let lastUrl = location.href
-new MutationObserver(() => {
-    const url = location.href
-
-    if (url !== lastUrl) {
-        console.log('URL changed!', lastUrl, '->', url)
-        lastUrl = url
-        initPage()
-    }
-}).observe(document, { subtree: true, childList: true })
-
-init()
+console.log('💈 Content script loaded for', chrome.runtime.getManifest().name)
+main()

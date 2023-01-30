@@ -1,17 +1,13 @@
 // eslint-disable-next-line import/no-unassigned-import
-import 'webext-base-css';
 import 'chota'
 import './options.css';
 
 import optionsStorage from './options-storage.js';
 
+// Dark mode
 if (window.matchMedia &&
     window.matchMedia('(prefers-color-scheme: dark)').matches) {
     document.body.classList.add('dark');
-}
-
-async function init() {
-    await optionsStorage.syncForm('#options-form');
 }
 
 // Locales
@@ -28,5 +24,13 @@ Array.from(links).forEach((element) => {
         if (url) chrome.tabs.create({ url })
     })
 })
+
+/**
+ * Main function
+ * @async
+ */
+async function init() {
+    await optionsStorage.syncForm('#options-form');
+}
 
 init();
