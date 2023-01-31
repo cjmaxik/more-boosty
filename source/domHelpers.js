@@ -134,11 +134,11 @@ const prepareChangelogModal = () => {
                 
                 <div class="Buttons_buttons_BbEpA" style="margin-top: 40px;">
                     <a href="https://boosty.to/cjmaxik" rel="noreferref noopener nofollow" target="_blank" class="BaseButton_button_yO8r5 ContainedButton_button_mJG1l ContainedButton_colorDefault_fJta6" style="color: rgb(232, 230, 227);">
-                        Поддержать проект на Бусти
+                        ${chrome.i18n.getMessage('options_boosty_link')}
                     </a>
                     
                     <a href="#" id="MB_optionsButton" class="BaseButton_button_yO8r5 OutlinedButton_button_gVLJD">
-                        Настройки
+                        ${chrome.i18n.getMessage('options_title')}
                     </a>
                 </div>
             </div>
