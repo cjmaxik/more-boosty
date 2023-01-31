@@ -3,7 +3,8 @@ import OptionsSync from 'webext-options-sync';
 export default new OptionsSync({
     defaults: {
         full_layout: true,
-        max_video_quality: true,
+        force_video_quality: true,
+        video_quality: '1080p',
         theater_mode: true
     },
     migrations: [

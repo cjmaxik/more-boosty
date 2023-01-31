@@ -1,27 +1,4 @@
-html {
-    min-width: 300px;
-    overflow-x: hidden;
-    padding: 10px;
+body {
+    padding-top: 1em;
 }
 
-/* For use with screen readers */
-.sr-only {
-    display: none;
-}
-
-body.dark {
-    --bg-color: #292a2d;
-    --bg-secondary-color: #131316;
-    --font-color: #e8eaed;
-    --color-lightGrey: #3f4042;
-}
-
-form {
-    padding-bottom: 15px;
-}
-
-@-moz-document url-prefix('') {
-    body.dark {
-        --bg-color: #23222b;
-    }
-}

@@ -1,14 +1,20 @@
 {
+    "description": {
+        "message": "Улучшаем интерфейс и функции Boosty"
+    },
     "options_title": {
         "message": "Параметры"
     },
     "options_full_layout": {
         "message": "Широкоформатный режим"
     },
-    "options_max_video_quality": {
-        "message": "Максимальное качество видео"
+    "options_force_video_quality": {
+        "message": "Изменять качество видео"
     },
-    "options_max_video_quality_desc": {
+    "options_video_quality": {
+        "message": "Качество видео"
+    },
+    "options_video_quality_desc": {
         "message": "только для плеера VK"
     },
     "options_theater_mode": {
@@ -18,7 +24,7 @@
         "message": "для стримов, скролл вниз для верхнего меню"
     },
     "options_saved": {
-        "message": "Параметры сохраняются автоматически"
+        "message": "Изменения сохраняются автоматически"
     },
     "options_boosty_link": {
         "message": "Поддержи проект на Бусти!"
@@ -36,6 +42,9 @@
     "content_pip": {
         "message": "Картинка-в-картинке"
     },
+    "changelog": {
+        "message": "Список изменений"
+    },
     "changelog_latest_version": {
         "message": "Вот что новенького:"
     },
@@ -44,5 +53,8 @@
     },
     "changelog_track_of_the_update": {
         "message": "Музыкальный трек обновления:"
+    },
+    "extension_has_been_updated": {
+        "message": "More Boosty обновился!"
     }
 }

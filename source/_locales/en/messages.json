@@ -1,14 +1,20 @@
 {
+    "description": {
+        "message": "Improve interface and features on Boosty"
+    },
     "options_title": {
         "message": "Options"
     },
     "options_full_layout": {
         "message": "Widescreen layout"
     },
-    "options_max_video_quality": {
-        "message": "Max video quailty"
+    "options_force_video_quality": {
+        "message": "Force video quailty"
     },
-    "options_max_video_quality_desc": {
+    "options_video_quality": {
+        "message": "Video quailty"
+    },
+    "options_video_quality_desc": {
         "message": "for VK video player only"
     },
     "options_theater_mode": {
@@ -18,7 +24,7 @@
         "message": "for streams, scroll down for the top menu"
     },
     "options_saved": {
-        "message": "Options are saved automatically"
+        "message": "Changes are saved automatically"
     },
     "options_boosty_link": {
         "message": "Support this project on Boosty!"
@@ -36,6 +42,9 @@
     "content_pip": {
         "message": "Picture-in-picture"
     },
+    "changelog": {
+        "message": "Changelog"
+    },
     "changelog_latest_version": {
         "message": "New stuff in this update:"
     },
@@ -44,5 +53,8 @@
     },
     "changelog_track_of_the_update": {
         "message": "Music track of this update:"
+    },
+    "extension_has_been_updated": {
+        "message": "More Boosty has been updated!"
     }
 }

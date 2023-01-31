@@ -1,7 +1,7 @@
 {
     "name": "More Boosty",
     "version": "0.0.0",
-    "description": "Helper extension for Boosty",
+    "description": "__MSG_description__",
     "homepage_url": "https://boosty.to/cjmaxik",
     "manifest_version": 3,
     "minimum_chrome_version": "100",
@@ -10,7 +10,8 @@
         "128": "icon.png"
     },
     "permissions": [
-        "storage"
+        "storage",
+        "notifications"
     ],
     "host_permissions": [
         "https://boosty.to/*"
@@ -30,7 +31,6 @@
         }
     ],
     "options_ui": {
-        "browser_style": true,
         "page": "options.html"
     },
     "background": {

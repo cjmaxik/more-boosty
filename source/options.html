@@ -1,43 +1,85 @@
-<!doctype html>
-<meta charset="utf-8">
-<title data-locale="options_title">Options</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-locale="options_title">Options</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div>
+                <form id="options-form">
+                    <div class="ms-form-group">
+                        <label class="label-inline">
+                            <input type="checkbox" name="full_layout">
+                            <span data-locale="options_full_layout" for="full_layout">
+                                Widescreen layout
+                            </span>
+                        </label>
+                    </div>
 
-<form id="options-form" class="detail-view-container">
-    <label class="label-inline">
-        <input type="checkbox" name="full_layout">
-        <span data-locale="options_full_layout">Widescreen layout</span>
-    </label>
-    <hr>
+                    <hr>
 
-    <label class="label-inline">
-        <input type="checkbox" name="max_video_quality">
-        <span data-locale="options_max_video_quality">Max video quailty</span>
-    </label>
-    <i class="is-right" data-locale="options_max_video_quality_desc">for VK video player only</i>
-    <hr>
+                    <div class="ms-form-group">
+                        <label class="label-inline">
+                            <input type="checkbox" name="theater_mode">
+                            <span data-locale="options_theater_mode" for="theater_mode">
+                                Theater mode
+                            </span>
+                        </label>
+                        <span data-locale="options_theater_mode_desc" class="ms-under-input ms-text-light ms-text-right">
+                            tetet
+                        </span>
+                    </div>
 
-    <label class="label-inline">
-        <input type="checkbox" name="theater_mode">
-        <span data-locale="options_theater_mode">Theater mode</span>
-    </label>
-    <i class="is-right" data-locale="options_theater_mode_desc">for streams, scroll down for the top menu</i>
-</form>
+                    <hr>
+                    
+                    <div class="ms-form-group">
+                        <label class="label-inline">
+                            <input type="checkbox" name="force_video_quality">
+                            <span data-locale="options_force_video_quality" for="force_video_quality">
+                                Force video quality
+                            </span>
+                        </label>
+                    </div>
 
-<div class="card">
-    <p class="text-center">
-        <span data-locale="options_saved">
-            Options are saved automatically
-        </span>
-    </p>
-    <hr>
-    <p class="text-center">
-        <a class="openURL" href="https://boosty.to/cjmaxik" data-locale="options_boosty_link">
-            Support this project on Boosty!
-        </a><br><a class="openURL" href="https://github.com/cjmaxik/more-boosty" data-locale="options_github_link">
-            Source code
-        </a>
-        <small><br>More Boosty © 2023 CJMAXiK<br><i>Boosty © 2023 MY.GAMES B.V.</i></small>
-    </p>
-</div>
+                    <div class="ms-form-group">
+                        <select type="select" id="video_quality" disabled>
+                        </select>
+                        <span data-locale="options_video_quality_desc" class="ms-under-input ms-text-light ms-text-right">
+                            for VK video player only
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="ms-footer ms-small">
+        <div class="container">
+            <p><i>
+                <span data-locale="options_saved">
+                    Options are saved automatically
+                </span>
+            </i></p>
+            <p>
+                <a class="openURL" href="https://boosty.to/cjmaxik#mb_update" data-locale="changelog">
+                    Changelog
+                </a><br/>
+                <a class="openURL ms-text-orange" href="https://boosty.to/cjmaxik" data-locale="options_boosty_link">
+                    Support this project on Boosty!
+                </a><br/>
+                <a class="openURL ms-text-light" href="https://github.com/cjmaxik/more-boosty" data-locale="options_github_link">
+                    Source code
+                </a>
+                <br/>                
+                <small><br/>More Boosty © 2023 CJMAXiK<br/><i>Boosty © 2023 MY.GAMES B.V.</i></small>
+            </p>
+        </div>
+    </footer>
+</body>
 
 <script src="options.js" type="module"></script>
+</html>

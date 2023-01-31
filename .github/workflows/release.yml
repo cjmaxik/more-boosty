@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 20
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
           cache: npm
       - name: install
         run: npm ci || npm install

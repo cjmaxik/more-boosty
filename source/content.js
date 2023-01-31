@@ -24,6 +24,13 @@ const main = async () => {
     const topMenuLeft = document.querySelector(`div[class^=${topMenuLeftBaseClass}]`)
     domHelpers.injectIconInTopMenu(topMenuLeft)
 
+    if (location.hash && location.hash.includes('mb_update')) {
+        location.href = '#'
+
+        const changelogButton = document.querySelector('a#MB_changelog')
+        changelogButton.click()
+    }
+
     // Inject VK video player changes (if loaded directly)
     const videoPlayer = document.querySelectorAll(vkVideoPlayerElement)
     for (const player of videoPlayer) {

@@ -123,7 +123,7 @@ const prepareChangelogModal = () => {
 
                     <div>
                         <h3>${chrome.i18n.getMessage('changelog_previous_version')}</h3>
-                        ${generateChangelogText('previous', uiLang)}
+                        <i>${generateChangelogText('previous', uiLang)}</i>
                     </div>
 
                     <div>
@@ -184,7 +184,7 @@ const generateChangelogText = (type, lang) => {
  */
 const generateChangelogMusicTrack = () => {
     const template = (track) => safeHTML`
-        <div style="margin-left: 15px;">
+        <div style="margin-left: 20px;">
             ${track.producer} - <strong>${track.name}</strong></br>
             <a href="${track.youtube}" rel="noreferref noopener nofollow" target="_blank">YouTube</a> | <a href="${track.spotify}" rel="noreferref noopener nofollow" target="_blank">Spotify</a>
         </div>
@@ -274,9 +274,24 @@ const prepareVideoPlayer = (event, options) => {
         player.querySelector('div.MB_pip').addEventListener('click', pip)
     }
 
-    // Max Video Quality
-    if (options.max_video_quality) {
-        const item_quality = player.querySelectorAll('li.item-quality')
+    // Force Video Quality
+    if (options.force_video_quality) forceVideoQuality(player, options.video_quality)
+}
+
+/**
+ * Force video quality
+ * @see {@link prepareVideoPlayer}
+ * @param {Node} player
+ * @param {String} video_quality
+ */
+const forceVideoQuality = (player, video_quality) => {
+    const item_quality = player.querySelectorAll('li.item-quality')
+    for (const quality of item_quality) {
+        if (quality.dataset.value === video_quality) {
+            quality.click()
+            break
+        }
+
         item_quality[0].click()
     }
 }
