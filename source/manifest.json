@@ -11,7 +11,8 @@
     },
     "permissions": [
         "storage",
-        "notifications"
+        "notifications",
+        "alarms"
     ],
     "host_permissions": [
         "https://boosty.to/*"
@@ -25,7 +26,7 @@
                 "content.js"
             ],
             "css": [
-                "content.css"
+                "content.scss"
             ],
             "run_at": "document_idle"
         }

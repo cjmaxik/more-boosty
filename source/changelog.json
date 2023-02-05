@@ -1,6 +1,16 @@
 {
     "latest": {
         "ru": [
+            "Расширение запоминает момент, на котором ты закончил смотреть видео или слушать аудио - больше не нужно кидать время в комментарии! Спасибо Павлу Страхову за идею.",
+            "Исправления стилей"
+        ],
+        "en": [
+            "Extension now saves the moment you've left off the video or audio - no need to comment with a timestamp anymore! Thanks, Pavel Strakhov, for the idea.",
+            "Style fixes"
+        ]
+    },
+    "previous": {
+        "ru": [
             "Переработана функция \"Качество видео\" - ты можешь выбрать конкретное качество (1080p по умолчанию). Спасибо Garyok за запрос.",
             "Небольшой редизайн окна параметров"
         ],
@@ -9,26 +19,10 @@
             "Slight redesign of the options window"
         ]
     },
-    "previous": {
-        "ru": [
-            "Полностью переработанная логика - должно работать быстрее, выше, сильнее!",
-            "Кнопка параметров расширения переехала в меню пользователя (справа сверху)",
-            "На ее месте - кнопка с информацией, которую ты сейчас и читаешь :)",
-            "Версия расширения - дата выпуска обновления, все пучком :)",
-            "Обновление зависимостей 🧑‍💻"
-        ],
-        "en": [
-            "Logic has been completely rebuilt - it should be better, faster, stronger!",
-            "Options button has been moved to the user menu (top right)",
-            "In its place - button with this very information :)",
-            "Extension version is now its date of its latest update, don't worry :)",
-            "Dependencies update 🧑‍💻"
-        ]
-    },
     "track": {
-        "producer": "Sev7n Noizex",
-        "name": "The Voice (Original Mix)",
-        "youtube": "https://youtu.be/LkfWP2lIZNk",
-        "spotify": "https://open.spotify.com/track/49i2L4ST7BTH9NASvDcFkX?si=da5c9587080c4d0f"
+        "producer": "Wolfgang Gartner",
+        "name": "Wolfgang's 5th Symphony (Hi-Fi Rush OST)",
+        "youtube": "https://youtu.be/eG2ShFZasC0",
+        "spotify": "https://open.spotify.com/track/7sLnn2UOttrEPBZSFyIsYh?si=4f2fa4631dcd4c93"
     }
 }

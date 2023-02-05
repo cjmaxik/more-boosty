@@ -8,6 +8,9 @@
     "options_full_layout": {
         "message": "Widescreen layout"
     },
+    "options_full_layout_desc": {
+        "message": "page is now 95% of screen width"
+    },
     "options_force_video_quality": {
         "message": "Force video quailty"
     },
@@ -15,13 +18,25 @@
         "message": "Video quailty"
     },
     "options_video_quality_desc": {
-        "message": "for VK video player only"
+        "message": "for Boosty video player only"
     },
     "options_theater_mode": {
-        "message": "Theater mode"
+        "message": "Theater mode for Boosty streams"
     },
     "options_theater_mode_desc": {
-        "message": "for streams, scroll down for the top menu"
+        "message": "scroll down to reveal the top menu"
+    },
+    "options_save_last_timestamp": {
+        "message": "Save where you left off video/audio"
+    },
+    "options_save_last_timestamp_desc_1": {
+        "message": "for Boosty players only"
+    },
+    "options_save_last_timestamp_desc_2": {
+        "message": "saved locally for 7 days, every 10 seconds"
+    },
+    "options_save_last_timestamp_desc_3": {
+        "message": "first and last 60 seconds are ignored"
     },
     "options_saved": {
         "message": "Changes are saved automatically"

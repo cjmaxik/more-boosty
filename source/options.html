@@ -18,6 +18,9 @@
                                 Widescreen layout
                             </span>
                         </label>
+                        <span data-locale="options_full_layout_desc" class="ms-under-input ms-text-light ms-text-right">
+                            page is now 95% of screen width
+                        </span>
                     </div>
 
                     <hr>
@@ -26,16 +29,36 @@
                         <label class="label-inline">
                             <input type="checkbox" name="theater_mode">
                             <span data-locale="options_theater_mode" for="theater_mode">
-                                Theater mode
+                                Theater mode for Boosty streams
                             </span>
                         </label>
                         <span data-locale="options_theater_mode_desc" class="ms-under-input ms-text-light ms-text-right">
-                            tetet
+                            scroll down to reveal the top menu 
                         </span>
                     </div>
 
                     <hr>
                     
+                    <div class="ms-form-group">
+                        <label class="label-inline">
+                            <input type="checkbox" name="save_last_timestamp">
+                            <span data-locale="options_save_last_timestamp" for="save_last_timestamp">
+                                Save where you left off video/audio
+                            </span>
+                        </label>
+                        <span class="ms-under-input ms-text-light ms-text-right">
+                            <span data-locale="options_save_last_timestamp_desc_1">
+                                for Boosty players only
+                            </span></br>
+                            <span data-locale="options_save_last_timestamp_desc_2">
+                                saved locally for 7 days, every 10 seconds
+                            </span></br>
+                            <span data-locale="options_save_last_timestamp_desc_3">
+                                first and last 60 seconds are ignored
+                            </span>
+                        </span>
+                    </div>
+
                     <div class="ms-form-group">
                         <label class="label-inline">
                             <input type="checkbox" name="force_video_quality">
@@ -49,7 +72,7 @@
                         <select type="select" id="video_quality" disabled>
                         </select>
                         <span data-locale="options_video_quality_desc" class="ms-under-input ms-text-light ms-text-right">
-                            for VK video player only
+                            for Boosty video player only
                         </span>
                     </div>
                 </form>
@@ -74,8 +97,6 @@
                 <a class="openURL ms-text-light" href="https://github.com/cjmaxik/more-boosty" data-locale="options_github_link">
                     Source code
                 </a>
-                <br/>                
-                <small><br/>More Boosty © 2023 CJMAXiK<br/><i>Boosty © 2023 MY.GAMES B.V.</i></small>
             </p>
         </div>
     </footer>

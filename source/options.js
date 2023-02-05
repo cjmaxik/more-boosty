@@ -3,7 +3,7 @@ import 'minstyle.io/dist/css/minstyle.io.min.css'
 import './options.css';
 
 import optionsStorage from './options-storage.js';
-import { videoQuality } from './videoQuality';
+import { videoQuality } from './types';
 
 // Dark mode
 if (window.matchMedia &&
@@ -30,7 +30,7 @@ Array.from(links).forEach((element) => {
 
 /**
  * Video quality stuff
- * TODO: Develope a proper support in fregante/webext-options-sync
+ * TODO: Develop a proper support in fregante/webext-options-sync
  */
 const videoQualityOptions = document.getElementById('video_quality')
 const forceVideoQuality = document.querySelector('input[name=force_video_quality]')

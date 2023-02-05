@@ -8,6 +8,9 @@
     "options_full_layout": {
         "message": "Широкоформатный режим"
     },
+    "options_full_layout_desc": {
+        "message": "страница растягивается на 95% ширины окна"
+    },
     "options_force_video_quality": {
         "message": "Изменять качество видео"
     },
@@ -15,13 +18,25 @@
         "message": "Качество видео"
     },
     "options_video_quality_desc": {
-        "message": "только для плеера VK"
+        "message": "только для плеера Boosty"
     },
     "options_theater_mode": {
-        "message": "Режим кинотеатра"
+        "message": "Режим кинотеатра для стримов на Boosty"
     },
     "options_theater_mode_desc": {
-        "message": "для стримов, скролл вниз для верхнего меню"
+        "message": "скролл вниз для отображения верхнего меню"
+    },
+    "options_save_last_timestamp": {
+        "message": "Запоминать, где остановились в аудио/видео"
+    },
+    "options_save_last_timestamp_desc_1": {
+        "message": "только для плееров Boosty"
+    },
+    "options_save_last_timestamp_desc_2": {
+        "message": "сохраняется локально на 7 дней, раз в 10 секунд"
+    },
+    "options_save_last_timestamp_desc_3": {
+        "message": "первые и последние 60 секунд игнорируются"
     },
     "options_saved": {
         "message": "Изменения сохраняются автоматически"

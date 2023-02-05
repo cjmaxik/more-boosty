@@ -6,6 +6,7 @@ const optionsInMenuBaseClass = 'MiniProfile_dropdownContainer_'
 const topMenuLeftBaseClass = 'TopMenu_left_'
 const streamPageBaseClass = 'StreamPage_block_'
 const vkVideoPlayerElement = 'vk-video-player'
+const audioPlayerElement = 'AudioBlock_root_'
 
 // Global variables
 let options
@@ -21,7 +22,7 @@ const main = async () => {
     // 1. Permanent changes
 
     // Inject extension icon to the top left menu
-    const topMenuLeft = document.querySelector(`div[class^=${topMenuLeftBaseClass}]`)
+    const topMenuLeft = document.querySelector(`div[class*=${topMenuLeftBaseClass}]`)
     domHelpers.injectIconInTopMenu(topMenuLeft)
 
     if (location.hash && location.hash.includes('mb_update')) {
@@ -37,9 +38,15 @@ const main = async () => {
         domHelpers.injectVkPlayerChanges(player, options)
     }
 
+    // Inject audio player changes (if loaded diretly)
+    const audioPlayer = document.querySelectorAll(`div[class*=${audioPlayerElement}]`)
+    for (const player of audioPlayer) {
+        domHelpers.injectAudioPlayerChanges(player, options)
+    }
+
     // Inject stream page stuff (if loaded directly)
     if (options.theater_mode && !theaterMode) {
-        const streamPageBlock = document.querySelector(`div[class^=${streamPageBaseClass}]`)
+        const streamPageBlock = document.querySelector(`div[class*=${streamPageBaseClass}]`)
 
         if (streamPageBlock) {
             domHelpers.injectStreamPageChanges(true)
@@ -67,6 +74,12 @@ const main = async () => {
                     // 2. Checking for classes only
                     if (!node.classList || !node.classList.length) continue
                     const classes = node.classList.value
+
+                    // Inject VK audio player changes
+                    if (classes.includes(audioPlayerElement)) {
+                        domHelpers.injectAudioPlayerChanges(node, options)
+                        continue
+                    }
 
                     // Inject extension options link to the menu
                     if (classes.includes(optionsInMenuBaseClass)) {

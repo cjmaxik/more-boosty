@@ -44,16 +44,30 @@ export const injectOptionsLink = (element) => {
 }
 
 /**
- * Prepares to inject VK player changes (pip, max quality) using one-time event listener
+ * Prepares to inject VK player changes using one-time event listener
  * @public
  * @param {Node} element `vk-video-player` node
  * @param {OptionsSync.UserOptions} options Extension options
  */
 export const injectVkPlayerChanges = (element, options) => {
     const player_wrapper = element.shadowRoot.querySelector('div.player-wrapper')
+
     player_wrapper.addEventListener('click', (event) => {
         prepareVideoPlayer(event, options)
     }, { once: true })
+}
+
+/**
+ * Prepares to inject audio player changes using one-time event listeners
+ * @public
+ * @param {Node} element player node
+ * @param {OptionsSync.UserOptions} options Extension options
+ * @returns 
+ */
+export const injectAudioPlayerChanges = (element, options) => {
+    if (!options.save_last_timestamp) return
+
+    lastAudioTimestamp(element, options)
 }
 
 /**
@@ -117,17 +131,17 @@ const prepareChangelogModal = () => {
 
                 <div class="PopupContent_content_A2EA3">
                     <div>
-                        <h2>${chrome.i18n.getMessage('changelog_latest_version')}</h2>
+                        <h2>🎉 ${chrome.i18n.getMessage('changelog_latest_version')}</h2>
                         ${generateChangelogText('latest', uiLang)}
                     </div>
 
                     <div>
-                        <h3>${chrome.i18n.getMessage('changelog_previous_version')}</h3>
+                        <h3>📒 ${chrome.i18n.getMessage('changelog_previous_version')}</h3>
                         <i>${generateChangelogText('previous', uiLang)}</i>
                     </div>
 
                     <div>
-                        <h3>${chrome.i18n.getMessage('changelog_track_of_the_update')}</h3>
+                        <h3>🎵 ${chrome.i18n.getMessage('changelog_track_of_the_update')}</h3>
                         ${generateChangelogMusicTrack()}
                     </div>
                 </div>
@@ -184,7 +198,7 @@ const generateChangelogText = (type, lang) => {
  */
 const generateChangelogMusicTrack = () => {
     const template = (track) => safeHTML`
-        <div style="margin-left: 20px;">
+        <div style="margin-left: 24px;">
             ${track.producer} - <strong>${track.name}</strong></br>
             <a href="${track.youtube}" rel="noreferref noopener nofollow" target="_blank">YouTube</a> | <a href="${track.spotify}" rel="noreferref noopener nofollow" target="_blank">Spotify</a>
         </div>
@@ -276,6 +290,159 @@ const prepareVideoPlayer = (event, options) => {
 
     // Force Video Quality
     if (options.force_video_quality) forceVideoQuality(player, options.video_quality)
+
+    // Save Timestamp
+    if (options.save_last_timestamp) lastVideoTimestamp(player, options)
+}
+
+/**
+ * Save/retrieve the last timestamp for the video
+ * @param {Node} player 
+ * @param {OptionsSync.UserOptions} options 
+ */
+const lastVideoTimestamp = (player, options) => {
+    const video = player.querySelector('video')
+
+    playContentEvent(video, player)
+}
+
+/**
+ * Save/retrieve the last timestamp for the audio
+ * @param {Node} player 
+ * @param {OptionsSync.UserOptions} options 
+ */
+const lastAudioTimestamp = (player, options) => {
+    const audio = player.querySelector('audio')
+
+    playContentEvent(audio, player)
+}
+
+/**
+ * Inject play event for timestamps
+ * @param {Node} element 
+ */
+const playContentEvent = (element, player) => {
+    element.addEventListener('play', (event) => contentIsLoaded(event, player), { once: true })
+}
+
+/**
+ * Generate a last timestamp indicator for a video
+ * @param {Node} player 
+ * @param {Number} duration 
+ * @param {Number} timestamp 
+ */
+const injectSavedTimestampIndicator = (player, duration, timestamp) => {
+    const position = timestamp * 100 / duration
+    const template = `
+        <span class="MB_last_timestamp" style="
+            display: block; 
+            position: absolute; 
+            z-index: 99999; 
+            height: 100%; 
+            width: 3px; 
+            background-color: rgb(174,54,12);
+            left: ${position}%;
+        "></span>
+    `
+    const bars = player.querySelector('div.bars')
+    bars.insertAdjacentHTML('beforeEnd', template)
+}
+
+/**
+ * Save the current audio/video timestamp
+ * @param {Event} content Event
+ * @param {Node} content Audio/video element
+ * @param {Number} [timeout=10] Timeout (in seconds)  
+ */
+const contentIsLoaded = async (event, player, timeout = 10) => {
+    const content = event.currentTarget
+    const contentID = getContentID(content)
+    if (contentID === undefined) {
+        console.error('Cannot find a content ID for', content)
+    }
+    if (content.duration <= 180) return
+
+    const savedTimestamp = await retrieveTimestamp(contentID)
+    if (savedTimestamp) {
+        content.currentTime = savedTimestamp
+        if (content.tagName === 'VIDEO') injectSavedTimestampIndicator(player, content.duration, savedTimestamp)
+    }
+
+    let timeToSave = true
+    let previouslySavedTimestamp = 0
+    content.addEventListener('timeupdate', async (event) => {
+        if (!timeToSave) return
+
+        let currentTimestamp = event.target.currentTime
+        if (
+            // First one minute of the content
+            currentTimestamp <= 60 ||
+            // Last one minute of the content
+            content.duration - currentTimestamp <= 60
+        ) {
+            // Ignore this video
+            currentTimestamp = 0
+        };
+
+        // Disable the function call
+        timeToSave = false
+        if (
+            // Prevents useless caching right after starts playing
+            currentTimestamp !== savedTimestamp
+            // Prevents useless caching when timestamp has not changed (pause, ignored)
+            && currentTimestamp !== previouslySavedTimestamp
+        ) {
+            saveTimestamp(contentID, currentTimestamp)
+            previouslySavedTimestamp = currentTimestamp
+        }
+
+        // Throttle 'timeupdate' event call to once in 10 seconds
+        setTimeout(() => timeToSave = true, 10000);
+    })
+}
+
+/**
+ * Send a message to background script to retrieve timestamp
+ * @param {String} id 
+ * @returns {Number}
+ */
+const retrieveTimestamp = async (id) => {
+    return await chrome.runtime.sendMessage({
+        action: "retrieveTimestamp",
+        id
+    })
+}
+
+/**
+ * Send a message to background script to save timestamp
+ * @param {String} id 
+ * @param {Number} timestamp 
+ */
+const saveTimestamp = (id, timestamp) => {
+    chrome.runtime.sendMessage({
+        action: "saveTimestamp",
+        id,
+        timestamp
+    })
+}
+
+/**
+ * Retrieves an ID for the audio/video element
+ * @param {Node} element 
+ * @returns 
+ */
+const getContentID = (element) => {
+    const contentURL = new URL(element.getAttribute('src'))
+
+    switch (element.tagName) {
+        case 'AUDIO':
+            return contentURL.pathname.replace('/audio/', '')
+
+        case 'VIDEO':
+            return contentURL.searchParams.get('id')
+    }
+
+    return undefined;
 }
 
 /**
@@ -319,5 +486,5 @@ const pip = (event) => {
  */
 const openOptionsPage = (event) => {
     event.preventDefault()
-    chrome.runtime.sendMessage({ "action": "openOptionsPage" })
+    chrome.runtime.sendMessage({ action: "openOptionsPage" })
 }
