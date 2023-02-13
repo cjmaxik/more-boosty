@@ -1,56 +1,47 @@
 {
-    "private": true,
-    "scripts": {
-        "clean": "shx rm -rf distribution",
-        "lint": "run-p lint:*",
-        "lint-fix": "run-p 'lint:* -- --fix'",
-        "lint:css": "stylelint source/**/*.css",
-        "lint:js": "xo",
-        "test": "run-p lint:* build",
-        "build": "npm run clean && parcel build source/manifest.json --no-content-hash --no-source-maps --dist-dir distribution --no-cache --detailed-report 0",
-        "watch": "npm run clean && parcel watch source/manifest.json --host localhost --dist-dir distribution --no-cache"
-    },
-    "browserslist": [
-        "last 1 Chrome version",
-        "last 1 Firefox version"
-    ],
-    "xo": {
-        "semicolon": false,
-        "space": 4,
-        "envs": [
-            "browser",
-            "webextensions"
-        ]
-    },
-    "stylelint": {
-        "extends": "stylelint-config-xo"
-    },
-    "dependencies": {
-        "html-template-tag": "^4.0.1",
-        "minstyle.io": "^2.0.1",
-        "webext-base-css": "^1.4.3",
-        "webext-options-sync": "^4.0.1"
-    },
-    "devDependencies": {
-        "@parcel/config-webextension": "^2.8.3",
-        "@parcel/transformer-sass": "^2.8.3",
-        "npm-run-all": "^4.1.5",
-        "parcel": "^2.8.3",
-        "shx": "^0.3.4",
-        "stylelint": "^14.16.1",
-        "stylelint-config-xo": "^0.21.1",
-        "xo": "^0.53.1"
-    },
-    "webExt": {
-        "sourceDir": "distribution",
-        "run": {
-            "startUrl": [
-                "https://github.com/cjmaxik/more-boosty"
-            ]
-        }
-    },
-    "@parcel/bundler-default-bug": "https://github.com/parcel-bundler/parcel/issues/8071",
-    "@parcel/bundler-default": {
-        "minBundles": 10000000
+  "private": true,
+  "scripts": {
+    "clean": "shx rm -rf distribution .parcel-cache",
+    "build": "npm run clean && parcel build source/manifest.json --no-content-hash --no-source-maps --dist-dir distribution --no-cache --detailed-report 0",
+    "watch": "npm run clean && parcel watch source/manifest.json --host localhost --dist-dir distribution --no-cache"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "browserslist": [
+    "last 1 Chrome version",
+    "last 1 Firefox version"
+  ],
+  "standard": {
+    "globals": [
+      "chrome",
+      "location",
+      "MutationObserver"
+    ]
+  },
+  "dependencies": {
+    "html-template-tag": "^4.0.1",
+    "minstyle.io": "^2.0.1",
+    "webext-base-css": "^1.4.3",
+    "webext-options-sync": "^4.0.1"
+  },
+  "devDependencies": {
+    "@parcel/config-webextension": "^2.8.3",
+    "@parcel/transformer-sass": "^2.8.3",
+    "parcel": "^2.8.3",
+    "shx": "^0.3.4",
+    "standard": "*"
+  },
+  "webExt": {
+    "sourceDir": "distribution",
+    "run": {
+      "startUrl": [
+        "https://github.com/cjmaxik/more-boosty"
+      ]
     }
+  },
+  "@parcel/bundler-default-bug": "https://github.com/parcel-bundler/parcel/issues/8071",
+  "@parcel/bundler-default": {
+    "minBundles": 10000000
+  }
 }

@@ -1,0 +1,32 @@
+{
+  "latest": {
+    "ru": [
+      "Техническое обновление. Всё работает как и раньше, только лучше 😁",
+      "Для разработчиков - полностью переписанное README на Github"
+    ],
+    "en": [
+      "Technical update. Everything works just like before, but better 😁",
+      "For developers - fully rewritten README on Github"
+    ]
+  },
+  "previous": {
+    "ru": [
+      "Расширение запоминает момент, на котором ты закончил смотреть видео или слушать аудио - больше не нужно кидать время в комментарии! Спасибо Павлу Страхову за идею.",
+      "Исправления стилей",
+      "Переработана функция \"Качество видео\" - ты можешь выбрать конкретное качество (1080p по умолчанию). Спасибо Garyok за запрос.",
+      "Небольшой редизайн окна параметров"
+    ],
+    "en": [
+      "Extension now saves the moment you've left off the video or audio - no need to comment with a timestamp anymore! Thanks, Pavel Strakhov, for the idea.",
+      "Style fixes",
+      "\"Video quality\" function has been reimplemented - now you can choose the desired quality (1080p by default). Thanks, Garyok, for the request.",
+      "Slight redesign of the options window"
+    ]
+  },
+  "track": {
+    "producer": "Wolfgang Gartner",
+    "name": "Wolfgang's 5th Symphony (Hi-Fi Rush OST)",
+    "youtube": "https://youtu.be/eG2ShFZasC0",
+    "spotify": "https://open.spotify.com/track/7sLnn2UOttrEPBZSFyIsYh?si=4f2fa4631dcd4c93"
+  }
+}

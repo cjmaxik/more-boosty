@@ -1,75 +1,75 @@
 {
-    "description": {
-        "message": "Улучшаем интерфейс и функции Boosty"
-    },
-    "options_title": {
-        "message": "Параметры"
-    },
-    "options_full_layout": {
-        "message": "Широкоформатный режим"
-    },
-    "options_full_layout_desc": {
-        "message": "страница растягивается на 95% ширины окна"
-    },
-    "options_force_video_quality": {
-        "message": "Изменять качество видео"
-    },
-    "options_video_quality": {
-        "message": "Качество видео"
-    },
-    "options_video_quality_desc": {
-        "message": "только для плеера Boosty"
-    },
-    "options_theater_mode": {
-        "message": "Режим кинотеатра для стримов на Boosty"
-    },
-    "options_theater_mode_desc": {
-        "message": "скролл вниз для отображения верхнего меню"
-    },
-    "options_save_last_timestamp": {
-        "message": "Запоминать, где остановились в аудио/видео"
-    },
-    "options_save_last_timestamp_desc_1": {
-        "message": "только для плееров Boosty"
-    },
-    "options_save_last_timestamp_desc_2": {
-        "message": "сохраняется локально на 7 дней, раз в 10 секунд"
-    },
-    "options_save_last_timestamp_desc_3": {
-        "message": "первые и последние 60 секунд игнорируются"
-    },
-    "options_saved": {
-        "message": "Изменения сохраняются автоматически"
-    },
-    "options_boosty_link": {
-        "message": "Поддержи проект на Бусти!"
-    },
-    "options_github_link": {
-        "message": "Исходный код"
-    },
-    "content_about": {
-        "message": "О расширении More Boosty"
-    },
-    "content_options_link": {
-        "message": "Параметры More Boosty",
-        "description": "`More Boosty` - название расширения. Не переводить! `Параметры` - перевод понятия Options для настроек расширений в Chrome."
-    },
-    "content_pip": {
-        "message": "Картинка-в-картинке"
-    },
-    "changelog": {
-        "message": "Список изменений"
-    },
-    "changelog_latest_version": {
-        "message": "Вот что новенького:"
-    },
-    "changelog_previous_version": {
-        "message": "В предыдущих обновлениях:"
-    },
-    "changelog_track_of_the_update": {
-        "message": "Музыкальный трек обновления:"
-    },
-    "extension_has_been_updated": {
-        "message": "More Boosty обновился!"
-    }
+  "description": {
+    "message": "Улучшаем интерфейс и функции Boosty"
+  },
+  "options_title": {
+    "message": "Параметры"
+  },
+  "options_full_layout": {
+    "message": "Широкоформатный режим"
+  },
+  "options_full_layout_desc": {
+    "message": "страница растягивается на 95% ширины окна"
+  },
+  "options_force_video_quality": {
+    "message": "Изменять качество видео"
+  },
+  "options_video_quality": {
+    "message": "Качество видео"
+  },
+  "options_video_quality_desc": {
+    "message": "только для плеера Boosty"
+  },
+  "options_theater_mode": {
+    "message": "Режим кинотеатра для стримов на Boosty"
+  },
+  "options_theater_mode_desc": {
+    "message": "скролл вниз для отображения верхнего меню"
+  },
+  "options_save_last_timestamp": {
+    "message": "Запоминать, где остановились в аудио/видео"
+  },
+  "options_save_last_timestamp_desc_1": {
+    "message": "только для плееров Boosty"
+  },
+  "options_save_last_timestamp_desc_2": {
+    "message": "сохраняется локально на 7 дней, раз в 10 секунд"
+  },
+  "options_save_last_timestamp_desc_3": {
+    "message": "первые и последние 60 секунд игнорируются"
+  },
+  "options_saved": {
+    "message": "Изменения сохраняются автоматически"
+  },
+  "options_boosty_link": {
+    "message": "Поддержи проект на Бусти!"
+  },
+  "options_github_link": {
+    "message": "Исходный код"
+  },
+  "content_about": {
+    "message": "О расширении More Boosty"
+  },
+  "content_options_link": {
+    "message": "Параметры More Boosty",
+    "description": "`More Boosty` - название расширения. Не переводить! `Параметры` - перевод понятия Options для настроек расширений в Chrome."
+  },
+  "content_pip": {
+    "message": "Картинка-в-картинке"
+  },
+  "changelog": {
+    "message": "Список изменений"
+  },
+  "changelog_latest_version": {
+    "message": "Вот что новенького:"
+  },
+  "changelog_previous_version": {
+    "message": "В предыдущих обновлениях:"
+  },
+  "changelog_track_of_the_update": {
+    "message": "Музыкальный трек обновления:"
+  },
+  "extension_has_been_updated": {
+    "message": "More Boosty обновился!"
+  }
 }

@@ -1,75 +1,75 @@
 {
-    "description": {
-        "message": "Improve interface and features on Boosty"
-    },
-    "options_title": {
-        "message": "Options"
-    },
-    "options_full_layout": {
-        "message": "Widescreen layout"
-    },
-    "options_full_layout_desc": {
-        "message": "page is now 95% of screen width"
-    },
-    "options_force_video_quality": {
-        "message": "Force video quailty"
-    },
-    "options_video_quality": {
-        "message": "Video quailty"
-    },
-    "options_video_quality_desc": {
-        "message": "for Boosty video player only"
-    },
-    "options_theater_mode": {
-        "message": "Theater mode for Boosty streams"
-    },
-    "options_theater_mode_desc": {
-        "message": "scroll down to reveal the top menu"
-    },
-    "options_save_last_timestamp": {
-        "message": "Save where you left off video/audio"
-    },
-    "options_save_last_timestamp_desc_1": {
-        "message": "for Boosty players only"
-    },
-    "options_save_last_timestamp_desc_2": {
-        "message": "saved locally for 7 days, every 10 seconds"
-    },
-    "options_save_last_timestamp_desc_3": {
-        "message": "first and last 60 seconds are ignored"
-    },
-    "options_saved": {
-        "message": "Changes are saved automatically"
-    },
-    "options_boosty_link": {
-        "message": "Support this project on Boosty!"
-    },
-    "options_github_link": {
-        "message": "Source code"
-    },
-    "content_about": {
-        "message": "About More Boosty"
-    },
-    "content_options_link": {
-        "message": "More Boosty options",
-        "description": "`More Boosty` is the extension name, do not translate! `Options` is the term for extension settings in Chrome."
-    },
-    "content_pip": {
-        "message": "Picture-in-picture"
-    },
-    "changelog": {
-        "message": "Changelog"
-    },
-    "changelog_latest_version": {
-        "message": "New stuff in this update:"
-    },
-    "changelog_previous_version": {
-        "message": "Previously:"
-    },
-    "changelog_track_of_the_update": {
-        "message": "Music track of this update:"
-    },
-    "extension_has_been_updated": {
-        "message": "More Boosty has been updated!"
-    }
+  "description": {
+    "message": "Improve interface and features on Boosty"
+  },
+  "options_title": {
+    "message": "Options"
+  },
+  "options_full_layout": {
+    "message": "Widescreen layout"
+  },
+  "options_full_layout_desc": {
+    "message": "page is now 95% of screen width"
+  },
+  "options_force_video_quality": {
+    "message": "Force video quailty"
+  },
+  "options_video_quality": {
+    "message": "Video quailty"
+  },
+  "options_video_quality_desc": {
+    "message": "for Boosty video player only"
+  },
+  "options_theater_mode": {
+    "message": "Theater mode for Boosty streams"
+  },
+  "options_theater_mode_desc": {
+    "message": "scroll down to reveal the top menu"
+  },
+  "options_save_last_timestamp": {
+    "message": "Save where you left off video/audio"
+  },
+  "options_save_last_timestamp_desc_1": {
+    "message": "for Boosty players only"
+  },
+  "options_save_last_timestamp_desc_2": {
+    "message": "saved locally for 7 days, every 10 seconds"
+  },
+  "options_save_last_timestamp_desc_3": {
+    "message": "first and last 60 seconds are ignored"
+  },
+  "options_saved": {
+    "message": "Changes are saved automatically"
+  },
+  "options_boosty_link": {
+    "message": "Support this project on Boosty!"
+  },
+  "options_github_link": {
+    "message": "Source code"
+  },
+  "content_about": {
+    "message": "About More Boosty"
+  },
+  "content_options_link": {
+    "message": "More Boosty options",
+    "description": "`More Boosty` is the extension name, do not translate! `Options` is the term for extension settings in Chrome."
+  },
+  "content_pip": {
+    "message": "Picture-in-picture"
+  },
+  "changelog": {
+    "message": "Changelog"
+  },
+  "changelog_latest_version": {
+    "message": "New stuff in this update:"
+  },
+  "changelog_previous_version": {
+    "message": "Previously:"
+  },
+  "changelog_track_of_the_update": {
+    "message": "Music track of this update:"
+  },
+  "extension_has_been_updated": {
+    "message": "More Boosty has been updated!"
+  }
 }
