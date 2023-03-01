@@ -9,6 +9,7 @@
 * Widescreen page layout
 * Force video quality *(for Boosty player)*
 * Picture-in-picture *(for Boosty player)*
+* Download video *(for Boosty player)*
 * Save where you left off video/audio *(for Boosty players)*
 * Theater mode for streams
 
@@ -69,6 +70,7 @@ npm run watch
     - Might require a page reload for content script
 - [Content script](./source/content/content.js) requires a page reload
 - [Options page](./source/options/options.html) requires a page or extension reload
+- Assets (changelog icons) require an extension reload
 
 [1]: https://chrome.google.com/webstore/detail/more-boosty/kpcbalinpdhnlgonfoflhflnfgcbffbl
 [2]: https://github.com/cjmaxik/more-boosty/releases

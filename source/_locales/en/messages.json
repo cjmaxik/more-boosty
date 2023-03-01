@@ -57,6 +57,9 @@
   "content_pip": {
     "message": "Picture-in-picture"
   },
+  "content_download": {
+    "message": "Download with current quality"
+  },
   "changelog": {
     "message": "Changelog"
   },

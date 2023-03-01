@@ -138,11 +138,15 @@ const prepareVideoPlayer = (event, options) => {
   const player = event.currentTarget.parentElement
   const controls = player.querySelector('div.controls')
 
+  // Add PiP button (for supported browsers)
   if (document.pictureInPictureEnabled) {
-    // There is no user input for this call, this is safe
     controls.lastElementChild.insertAdjacentHTML('beforeBegin', templates.pipButton())
     player.querySelector('div.MB_pip').addEventListener('click', pip)
   }
+
+  // Add Download button
+  controls.lastElementChild.insertAdjacentHTML('beforeBegin', templates.downloadButton())
+  player.querySelector('div.MB_download').addEventListener('click', download)
 
   // Force Video Quality
   if (options.force_video_quality) forceVideoQuality(player, options.video_quality)
@@ -326,6 +330,43 @@ const pip = (event) => {
   } else if (document.pictureInPictureEnabled) {
     video.requestPictureInPicture()
   }
+}
+
+/**
+ * Operate Download video
+ * @private
+ * @see {@link prepareVideoPlayer} for event conditions
+ * @param {Event} event
+ */
+const download = (event) => {
+  const playerWrapper = event.currentTarget.parentElement.parentElement.parentElement
+  const video = playerWrapper.querySelector('video')
+  const videoUrl = video.getAttribute('src')
+
+  if (!videoUrl) {
+    console.error("Video URL is missing")
+    return
+  }
+
+  generateDownloadLink(videoUrl)
+}
+
+/**
+ * Generate URL download
+ * @param {URL} url
+ */
+const generateDownloadLink = (url) => {
+  const link = document.createElement('a')
+  link.style.display = 'none'
+  link.href = url
+  link.download = 'boosty'
+
+  document.body.appendChild(link)
+  link.click()
+
+  setTimeout(() => {
+    link.parentNode.removeChild(link);
+  }, 0);
 }
 
 /**

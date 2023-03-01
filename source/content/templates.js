@@ -18,7 +18,7 @@ if (uiLang !== 'ru' || uiLang !== 'en') {
 }
 
 export const optionsLink = () => `
-  <a class="Link_block_f6iQc MiniProfile_link_rQTY2" href="#" id="MB_options"> 
+  <a class="Link_block_f6iQc MiniProfile_link_rQTY2" href="#" id="MB_options">
       <div class="DropdownItem_block_EtyZL DropdownItem_blockClickable_hJXfh">
           <div class="ProfileDropdownItem_item_oHFvi">
               <span class="Icon_block_Hvwi5 ProfileDropdownItem_icon_iNRrH">
@@ -59,7 +59,7 @@ export const changelogModal = () => `
 
               <p>
                   <small>
-                      Created by <a href="https://cjmaxik.ru" rel="noreferref noopener nofollow" target="_blank">CJMAXiK</a>
+                      Created by <a href="https://cjmaxik.ru?ref=more_boosty" rel="noreferref noopener nofollow" target="_blank">CJMAXiK</a>
                   </small>
               </p>
           </div>
@@ -80,12 +80,12 @@ export const changelogModal = () => `
                   ${generateChangelogMusicTrack()}
               </div>
           </div>
-          
+
           <div class="Buttons_buttons_BbEpA" style="margin-top: 40px;">
-              <a href="https://boosty.to/cjmaxik" rel="noreferref noopener nofollow" target="_blank" class="BaseButton_button_yO8r5 ContainedButton_button_mJG1l ContainedButton_colorDefault_fJta6" style="color: rgb(232, 230, 227);">
+              <a href="https://boosty.to/cjmaxik?ref=more_boosty" rel="noreferref noopener nofollow" target="_blank" class="BaseButton_button_yO8r5 ContainedButton_button_mJG1l ContainedButton_colorDefault_fJta6" style="color: rgb(232, 230, 227);">
                   ${t('options_boosty_link')}
               </a>
-              
+
               <a href="#" id="MB_optionsButton" class="BaseButton_button_yO8r5 OutlinedButton_button_gVLJD">
                   ${t('options_title')}
               </a>
@@ -104,25 +104,48 @@ export const pipButton = () => `
   </div>
   <div class="container controls-element v-1fkqq1h"></div>
 `
+export const downloadButton = () => `
+  <div class="container controls-element v-1fkqq1h MB_download">
+      <div role="button" tabindex="0" title="${t('content_download')}">
+          <svg class="icon v-daygaf" xmlns="http://www.w3.org/2000/svg">
+              <g fill="#fff" fill-rule="evenodd">
+              <path class="_enter" d="M5 21H19V19H5M19 10H15V3H9V10H5L12 17 19 10Z"></path>
+          </svg>
+      </div>
+  </div>
+  <div class="container controls-element v-1fkqq1h"></div>
+`
 
 export const timestampIndicator = (position) => `
   <span class="MB_last_timestamp" style="
-      display: block; 
-      position: absolute; 
-      z-index: 99999; 
-      height: 100%; 
-      width: 3px; 
+      display: block;
+      position: absolute;
+      z-index: 99999;
+      height: 100%;
+      width: 3px;
       background-color: rgb(174,54,12);
       left: ${position}%;
   "></span>
 `
 
-const trackList = (track) => safeHTML`
-  <div style="margin-left: 24px;">
-      ${track.producer} - <strong>${track.name}</strong></br>
-      <a href="${track.youtube}" rel="noreferref noopener nofollow" target="_blank">YouTube</a> | <a href="${track.spotify}" rel="noreferref noopener nofollow" target="_blank">Spotify</a>
-  </div>
-`
+const trackList = (track) => {
+  const trackLink = (track) => safeHTML`
+   <a href="${track.link}" rel="noreferref noopener nofollow" target="_blank">${track.name}</a>
+  `
+
+  let links = ""
+  track.links.forEach((link, key, array) => {
+    links += trackLink(link)
+    if (!Object.is(array.length - 1, key)) links += " | "
+  });
+
+  return `
+    <div style="margin-left: 24px;">
+        ${track.producer} - <strong>${track.name}</strong></br>
+        ${links}
+    </div>
+  `
+}
 
 const noChangelog = '<ul><li>🤷</li></ul>'
 
@@ -151,10 +174,18 @@ const generateChangelogText = (type, lang) => {
  */
 const generateChangelogMusicTrack = () => {
   let track = {
-    producer: 'Darude ',
+    producer: 'Darude',
     name: 'Sandstorm',
-    youtube: 'https://youtu.be/y6120QOlsfU',
-    spotify: 'https://open.spotify.com/track/3dxDj8pDPlIHCIrUPXuCeG?si=188b40ce99aa4592'
+    links: [
+      {
+        name: "YouTube",
+        link: "https://youtu.be/y6120QOlsfU?ref=more_boosty"
+      },
+      {
+        name: "Spotify",
+        link: "https://open.spotify.com/track/3dxDj8pDPlIHCIrUPXuCeG?si=188b40ce99aa4592?ref=more_boosty"
+      }
+    ]
   }
 
   if (changelogText.track) {
