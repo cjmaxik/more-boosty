@@ -16,7 +16,7 @@
     "alarms"
   ],
   "host_permissions": [
-    "https://boosty.to/*"
+    "https://*.boosty.to/*"
   ],
   "content_scripts": [
     {

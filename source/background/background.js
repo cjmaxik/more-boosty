@@ -27,6 +27,10 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       saveTimestamp(message.id, message.timestamp)
       break
 
+    case 'retrievePostData':
+      retrievePostData(message.postId, message.blogName, message.accessToken).then(data => sendResponse(data))
+      return true
+
     default:
       break
   }
@@ -53,6 +57,28 @@ const saveTimestamp = async (id, timestamp) => {
  */
 const retrieveTimestamp = async (id) => await Cache.read(`t:${id}`)
 
+/**
+ * Retrieve the post data using API
+ * @param {String} postId
+ * @param {String} blogName
+ * @param {String} accessToken
+ * @returns
+ */
+const retrievePostData = async (postId, blogName, accessToken) => {
+  const response = await fetch(
+    `https://api.boosty.to/v1/blog/${blogName}/post/${postId}?component_limit=100`,
+    {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    }
+  )
+  const data = await response.json()
+
+  return data.data
+}
+
+/**
+ * Open options page
+ */
 const openOptionsPage = () => {
   chrome.runtime.openOptionsPage()
 }

@@ -1,3 +1,10 @@
 {
-  "mangle": true
+  "mangle": true,
+  "compress": {
+    "pure_funcs": [
+      "console.info",
+      "console.debug",
+      "console.warn"
+    ]
+  }
 }

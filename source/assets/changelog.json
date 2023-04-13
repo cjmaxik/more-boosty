@@ -1,10 +1,10 @@
 {
   "latest": {
     "ru": [
-      "Добавлена кнопка скачивания видео в текущем качестве в плеере Boosty - смотри без буферизации или возьми с собой!"
+      "Исправлена функция скачивания видео + можно выбрать желаемое качество. Спасибо за своевременные баг-репорты!"
     ],
     "en": [
-      "\"Download with current quality\" button has been added in Boosty video player - watch without buffering or take it with you!"
+      "Fixed video download feature + you can choose the desired quality. Thank you for your timely bug reports!"
     ]
   },
   "previous": {
@@ -18,12 +18,16 @@
     ]
   },
   "track": {
-    "producer": "Atomic Heart OST",
-    "name": "ЭЛЕАНОРА (CJMAXiK Edit)",
+    "producer": "Matt Merty",
+    "name": "Happy (Original Mix)",
     "links": [
       {
         "name": "YouTube",
-        "link": "https://youtu.be/K1_sdaogxOk?ref=more_boosty"
+        "link": "https://youtu.be/LzlsUuxD5Ig?ref=more_boosty"
+      },
+      {
+        "name": "Spotify",
+        "link": "https://open.spotify.com/track/5Xle3CK23ip8UQHHU7EpJ1?si=e024d8ec37dc45af&ref=more_boosty"
       }
     ]
   }

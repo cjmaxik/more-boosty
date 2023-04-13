@@ -146,7 +146,7 @@ const prepareVideoPlayer = (event, options) => {
 
   // Add Download button
   controls.lastElementChild.insertAdjacentHTML('beforeBegin', templates.downloadButton())
-  player.querySelector('div.MB_download').addEventListener('click', download)
+  player.querySelector('div.MB_download').addEventListener('click', (event) => download(event))
 
   // Force Video Quality
   if (options.force_video_quality) forceVideoQuality(player, options.video_quality)
@@ -338,35 +338,149 @@ const pip = (event) => {
  * @see {@link prepareVideoPlayer} for event conditions
  * @param {Event} event
  */
-const download = (event) => {
+const download = async (event) => {
   const playerWrapper = event.currentTarget.parentElement.parentElement.parentElement
-  const video = playerWrapper.querySelector('video')
-  const videoUrl = video.getAttribute('src')
+  const videoTitle = playerWrapper.querySelector('div.title').textContent
+  console.log(videoTitle)
 
-  if (!videoUrl) {
-    console.error("Video URL is missing")
-    return
+  let postLink = null
+  // Check if we are on the post page
+  const currentPageUrl = window.location.href
+  if (currentPageUrl.indexOf('/posts/') !== -1) {
+    // if so, then use post ID from the URL
+    postLink = currentPageUrl
+  } else {
+    // else, use the post ID from the post link (createdAt)
+    const postContent = playerWrapper.getRootNode().host.closest('div[class*=Post_container_]')
+    postLink = postContent.querySelector('a[class*=CreatedAt_headerLink_]').href
   }
 
-  generateDownloadLink(videoUrl)
+  const postId = postLink.split('/').reverse()[0]
+  const blogName = postLink.split('/').reverse()[2]
+  console.log('postId', postId, 'blogName', blogName)
+
+  const postData = await getPostContent(postId, blogName)
+  console.log('postData', postData)
+
+  const playerUrls = findPlayerUrls(postData, videoTitle)
+  console.log('playerUrls', playerUrls)
+
+  const videoLinks = prepareVideoLinks(playerUrls)
+  console.log('videoLinks', videoLinks)
+
+  prepareVideoDownloadModal(videoTitle, videoLinks)
+}
+
+/**
+ * Prepare video download modal
+ * @param {String} title
+ * @param {Object[]} links
+ */
+const prepareVideoDownloadModal = (title, links) => {
+  document.querySelector('div[class^=App_app_]').insertAdjacentHTML('beforeEnd', templates.videoDownloadModal(title, links))
+
+  const videoDownloadModal = document.querySelector('div#MB_video_download')
+  const videoDownloadClose = document.querySelector('span#MB_video_download_close')
+
+  videoDownloadClose.addEventListener('click', (event) => {
+    event.preventDefault()
+    videoDownloadModal.remove()
+  })
+
+  const videoDownloadLinks = videoDownloadModal.querySelectorAll('button.MB_video_download_link')
+  for (const link of videoDownloadLinks) {
+    link.addEventListener('click', (event) => {
+      event.preventDefault()
+      videoDownloadModal.remove()
+      generateDownloadLink(event)
+    })
+  }
+}
+
+/**
+ * Send a message to background script to retrieve post data
+ * @param {String} postId
+ * @returns {Object}
+ */
+const getPostContent = async (postId, blogName) => {
+  const auth = window.localStorage.getItem('auth')
+  const accessToken = JSON.parse(auth).accessToken
+
+  return await chrome.runtime.sendMessage({
+    action: 'retrievePostData',
+    postId,
+    blogName,
+    accessToken
+  })
+}
+
+/**
+ * Find suitable video URLs
+ * @param {Object[]} postData
+ * @param {String} videoTitle
+ * @returns {Array|null}
+ */
+const findPlayerUrls = (postData, videoTitle) => {
+  console.log('postData inside', postData)
+
+  for (const data of postData) {
+    if (data.type !== 'ok_video') continue
+    if (!data.playerUrls) continue
+
+    console.log(data)
+
+    if (data.title === videoTitle) return data.playerUrls
+  }
+
+  return null
+}
+
+/**
+ * Cleans the video links object
+ * @param {*} urls
+ */
+const prepareVideoLinks = (urls) => {
+  const videoQuality = [
+    'ultra_hd', // 2160p
+    'quad_hd', // 1440p
+    'full_hd', // 1080p
+    'high', // 720p
+    'medium', // 480p
+    'low', // 360p
+    'lowest', // 240p
+    'tiny' // 144p
+  ]
+
+  const filteredUrls = urls.filter(x =>
+    x.url && videoQuality.indexOf(x.type) !== -1
+  )
+
+  return filteredUrls.sort(
+    ({ type: a }, { type: b }) => videoQuality.indexOf(a) - videoQuality.indexOf(b)
+  )
 }
 
 /**
  * Generate URL download
- * @param {URL} url
+ * @param {Event} event
  */
-const generateDownloadLink = (url) => {
+const generateDownloadLink = (event) => {
+  const element = event.target
+  const url = element.dataset.url
+  const title = element.dataset.title
+
   const link = document.createElement('a')
   link.style.display = 'none'
   link.href = url
-  link.download = 'boosty'
+  link.target = '_blank'
+  // link.download = title // invalidates the context, do not use!
 
   document.body.appendChild(link)
   link.click()
 
   setTimeout(() => {
-    link.parentNode.removeChild(link);
-  }, 0);
+    link.parentNode.removeChild(link)
+  }, 100)
 }
 
 /**

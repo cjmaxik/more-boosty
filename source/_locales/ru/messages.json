@@ -58,7 +58,7 @@
     "message": "Картинка в картинке"
   },
   "content_download": {
-    "message": "Скачать в текущем качестве"
+    "message": "Скачать видео"
   },
   "changelog": {
     "message": "Список изменений"
@@ -74,5 +74,8 @@
   },
   "extension_has_been_updated": {
     "message": "More Boosty обновился!"
+  },
+  "download_video_modal_title": {
+    "message": "Выбери качество видео"
   }
 }

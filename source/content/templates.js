@@ -93,6 +93,29 @@ export const changelogModal = () => `
       </div>
   </div>
 `
+
+export const videoDownloadModal = (title, links) => `
+<div class="ScrollBox_scrollContainer_g0g0j Popup_wrapper_ZeN1U FadeIn_fade_ecikC FadeIn_entered_uFjQ8 fade_animate" id="MB_video_download">
+  <div class="PopupContent_block_P9UTg Popup_block_EdudK">
+      <span class="Icon_block_Hvwi5 PopupContent_close_s4F2c" id="MB_video_download_close">
+          <svg class="Icon_svg__DRUh"><use xlink:href="#svg-icon-close"></use></svg>
+      </span>
+
+      <div class="PopupContent_title_IHD2G">
+          <p>
+              <strong>
+                  ${t('download_video_modal_title')}: ${title}
+              </strong>
+          </p>
+      </div>
+
+      <div class="PopupContent_content_A2EA3" style="display: grid !important;">
+          ${generateVideoDownloadLinks(title, links)}
+      </div>
+  </div>
+</div>
+`
+
 export const pipButton = () => `
   <div class="container controls-element v-1fkqq1h MB_pip">
       <div role="button" tabindex="0" title="${t('content_pip')}">
@@ -133,11 +156,11 @@ const trackList = (track) => {
    <a href="${track.link}" rel="noreferref noopener nofollow" target="_blank">${track.name}</a>
   `
 
-  let links = ""
+  let links = ''
   track.links.forEach((link, key, array) => {
     links += trackLink(link)
-    if (!Object.is(array.length - 1, key)) links += " | "
-  });
+    if (!Object.is(array.length - 1, key)) links += ' | '
+  })
 
   return `
     <div style="margin-left: 24px;">
@@ -178,12 +201,12 @@ const generateChangelogMusicTrack = () => {
     name: 'Sandstorm',
     links: [
       {
-        name: "YouTube",
-        link: "https://youtu.be/y6120QOlsfU?ref=more_boosty"
+        name: 'YouTube',
+        link: 'https://youtu.be/y6120QOlsfU?ref=more_boosty'
       },
       {
-        name: "Spotify",
-        link: "https://open.spotify.com/track/3dxDj8pDPlIHCIrUPXuCeG?si=188b40ce99aa4592?ref=more_boosty"
+        name: 'Spotify',
+        link: 'https://open.spotify.com/track/3dxDj8pDPlIHCIrUPXuCeG?si=188b40ce99aa4592?ref=more_boosty'
       }
     ]
   }
@@ -193,4 +216,20 @@ const generateChangelogMusicTrack = () => {
   }
 
   return trackList(track)
+}
+
+/**
+ * Gererates a video download buttons for the modal
+ * @param {Object[]} urls
+ * @returns
+ */
+const generateVideoDownloadLinks = (title, urls) => {
+  let text = ''
+  for (const url of urls) {
+    text += safeHTML`<button data-url="${url.url}" data-title="${title}" class="MB_video_download_link BaseButton_button_yO8r5 OutlinedButton_button_gVLJD">
+      ${t(`video_quality_${url.type}`)}
+    </button>`
+  }
+
+  return text
 }
