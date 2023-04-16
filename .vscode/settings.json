@@ -1,0 +1,6 @@
+{
+  "files.exclude": {
+    "**/distribution": true,
+    "**/.parcel-cache": true
+  }
+}

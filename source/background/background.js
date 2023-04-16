@@ -31,6 +31,10 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       retrievePostData(message.postId, message.blogName, message.accessToken).then(data => sendResponse(data))
       return true
 
+    case 'retrieveDialogData':
+      retrieveDialogData(message.dialogId, message.accessToken).then(data => sendResponse(data))
+      return true
+
     default:
       break
   }
@@ -57,16 +61,19 @@ const saveTimestamp = async (id, timestamp) => {
  */
 const retrieveTimestamp = async (id) => await Cache.read(`t:${id}`)
 
+// TODO: simplify retrievePostData and retrieveDialogData
+// and move business logic up, no need to unpack data here
+
 /**
  * Retrieve the post data using API
  * @param {String} postId
  * @param {String} blogName
  * @param {String} accessToken
- * @returns
+ * @returns {Object[]}
  */
 const retrievePostData = async (postId, blogName, accessToken) => {
   const response = await fetch(
-    `https://api.boosty.to/v1/blog/${blogName}/post/${postId}?component_limit=100`,
+    `https://api.boosty.to/v1/blog/${blogName}/post/${postId}?component_limit=1000`,
     {
       headers: { Authorization: `Bearer ${accessToken}` }
     }
@@ -74,6 +81,23 @@ const retrievePostData = async (postId, blogName, accessToken) => {
   const data = await response.json()
 
   return data.data
+}
+
+/**
+ * Retrieve the dialog data using API
+ * @param {String} dialogId
+ * @param {String} accessToken
+ * @returns {Object[]}
+ */
+const retrieveDialogData = async (dialogId, accessToken) => {
+  const response = await fetch(`https://api.boosty.to/v1/dialog/${dialogId}?limit=1000`,
+    {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    }
+  )
+  const data = await response.json()
+
+  return data.messages.data.map(x => x.data).flat()
 }
 
 /**

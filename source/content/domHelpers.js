@@ -344,25 +344,43 @@ const download = async (event) => {
   console.log(videoTitle)
 
   let postLink = null
-  // Check if we are on the post page
-  const currentPageUrl = window.location.href
-  if (currentPageUrl.indexOf('/posts/') !== -1) {
-    // if so, then use post ID from the URL
+  let dialogId = null
+  const currentPageUrl = new URL(window.location.href)
+
+  // Check if we are on the post or dialog page
+  if (currentPageUrl.pathname.indexOf('/posts/') !== -1) {
+    // if post, then use post ID from the URL
     postLink = currentPageUrl
+  } else if (
+    currentPageUrl.pathname.indexOf('/app/messages') !== -1 &&
+    currentPageUrl.searchParams.has('dialogId')
+  ) {
+    // if dialog, use the dialog ID from URL
+    dialogId = currentPageUrl.searchParams.get('dialogId')
   } else {
     // else, use the post ID from the post link (createdAt)
     const postContent = playerWrapper.getRootNode().host.closest('div[class*=Post_container_]')
     postLink = postContent.querySelector('a[class*=CreatedAt_headerLink_]').href
   }
 
-  const postId = postLink.split('/').reverse()[0]
-  const blogName = postLink.split('/').reverse()[2]
-  console.log('postId', postId, 'blogName', blogName)
+  let components = null
+  if (!dialogId && postLink) {
+    const postId = postLink.split('/').reverse()[0]
+    const blogName = postLink.split('/').reverse()[2]
+    console.log('postId', postId, 'blogName', blogName)
 
-  const postData = await getPostContent(postId, blogName)
-  console.log('postData', postData)
+    components = await getPostComponents(postId, blogName)
+  } else if (!postLink && dialogId) {
+    console.log('messageId', dialogId)
 
-  const playerUrls = findPlayerUrls(postData, videoTitle)
+    components = await getDialogComponents(dialogId)
+  } else {
+    console.error('Something went wrong with download()')
+    return
+  }
+  console.log('postData', components)
+
+  const playerUrls = findPlayerUrls(components, videoTitle)
   console.log('playerUrls', playerUrls)
 
   const videoLinks = prepareVideoLinks(playerUrls)
@@ -377,6 +395,19 @@ const download = async (event) => {
  * @param {Object[]} links
  */
 const prepareVideoDownloadModal = (title, links) => {
+  // Exit from fullscreen mode
+  if (document.fullscreenElement) {
+    document
+      .exitFullscreen()
+      .then(() => console.log('Document Exited from Full screen mode'))
+      .catch((err) => console.error(err))
+  }
+
+  // Close in dialogs
+  const closeButton = document.querySelector('button[class*=MediaSwiper_closeButton_]')
+  console.log(closeButton)
+  if (closeButton) closeButton.click()
+
   document.querySelector('div[class^=App_app_]').insertAdjacentHTML('beforeEnd', templates.videoDownloadModal(title, links))
 
   const videoDownloadModal = document.querySelector('div#MB_video_download')
@@ -398,20 +429,39 @@ const prepareVideoDownloadModal = (title, links) => {
 }
 
 /**
- * Send a message to background script to retrieve post data
+ * Send a message to background script to retrieve post components
  * @param {String} postId
  * @returns {Object}
  */
-const getPostContent = async (postId, blogName) => {
-  const auth = window.localStorage.getItem('auth')
-  const accessToken = JSON.parse(auth).accessToken
-
+const getPostComponents = async (postId, blogName) => {
   return await chrome.runtime.sendMessage({
     action: 'retrievePostData',
     postId,
     blogName,
-    accessToken
+    accessToken: getAccessToken()
   })
+}
+
+/**
+ * Send a message to background script to retrieve components of dialog messages
+ * @param {String} dialogId
+ * @returns {Object}
+ */
+const getDialogComponents = async (dialogId) => {
+  return await chrome.runtime.sendMessage({
+    action: 'retrieveDialogData',
+    dialogId,
+    accessToken: getAccessToken()
+  })
+}
+
+/**
+ * Gets an access token from local storage
+ * @returns {String}
+ */
+const getAccessToken = () => {
+  const auth = window.localStorage.getItem('auth')
+  return JSON.parse(auth).accessToken
 }
 
 /**
@@ -467,7 +517,7 @@ const prepareVideoLinks = (urls) => {
 const generateDownloadLink = (event) => {
   const element = event.target
   const url = element.dataset.url
-  const title = element.dataset.title
+  // const title = element.dataset.title // see below
 
   const link = document.createElement('a')
   link.style.display = 'none'

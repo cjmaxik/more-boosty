@@ -1,20 +1,18 @@
 {
   "latest": {
     "ru": [
-      "Исправлена функция скачивания видео + можно выбрать желаемое качество. Спасибо за своевременные баг-репорты!"
+      "Функция скачивания видео добавлена в личные сообщения. Спасибо Lo Lo за спонсирование данной функции!"
     ],
     "en": [
-      "Fixed video download feature + you can choose the desired quality. Thank you for your timely bug reports!"
+      "The video download feature now works in messages. Thank you, Lo Lo, for the funding!"
     ]
   },
   "previous": {
     "ru": [
-      "Расширение запоминает момент, на котором ты закончил смотреть видео или слушать аудио - больше не нужно кидать время в комментарии! Спасибо Павлу Страхову за идею.",
-      "Переработана функция \"Качество видео\" - ты можешь выбрать конкретное качество (1080p по умолчанию). Спасибо Garyok за запрос.",
+      "Исправлена функция скачивания видео + можно выбрать желаемое качество. Спасибо за своевременные баг-репорты!"
     ],
     "en": [
-      "Extension now saves the moment you've left off the video or audio - no need to comment with a timestamp anymore! Thanks, Pavel Strakhov, for the idea.",
-      "\"Video quality\" function has been reimplemented - now you can choose the desired quality (1080p by default). Thanks, Garyok, for the request.",
+      "Fixed the video download feature + you can choose the desired quality. Thank you for your timely bug reports!"
     ]
   },
   "track": {
