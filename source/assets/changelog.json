@@ -1,10 +1,12 @@
 {
   "latest": {
     "ru": [
-      "Функция скачивания видео добавлена в личные сообщения. Спасибо Lo Lo за спонсирование данной функции!"
+      "Функция скачивания видео добавлена в личные сообщения. Спасибо Lo Lo за спонсирование данной функции!",
+      "ИЗВЕСТНАЯ ПРОБЛЕМА: видео в очень старых личных сообщениях (больше 300) могут не скачиваться. Исправление ожидается в будущих обновлениях."
     ],
     "en": [
-      "The video download feature now works in messages. Thank you, Lo Lo, for the funding!"
+      "The video download feature now works in messages. Thank you, Lo Lo, for the funding!",
+      "KNOWN ISSUE: the video from very old messages (more than 300) may not download. Fix is coming in the next updates."
     ]
   },
   "previous": {

@@ -63,7 +63,6 @@ const retrieveTimestamp = async (id) => await Cache.read(`t:${id}`)
 
 // TODO: simplify retrievePostData and retrieveDialogData
 // and move business logic up, no need to unpack data here
-
 /**
  * Retrieve the post data using API
  * @param {String} postId
@@ -73,7 +72,7 @@ const retrieveTimestamp = async (id) => await Cache.read(`t:${id}`)
  */
 const retrievePostData = async (postId, blogName, accessToken) => {
   const response = await fetch(
-    `https://api.boosty.to/v1/blog/${blogName}/post/${postId}?component_limit=1000`,
+    `https://api.boosty.to/v1/blog/${blogName}/post/${postId}?component_limit=100`,
     {
       headers: { Authorization: `Bearer ${accessToken}` }
     }
@@ -83,6 +82,7 @@ const retrievePostData = async (postId, blogName, accessToken) => {
   return data.data
 }
 
+// TODO: Make this function aware of `offset` and use it to grab mesages in smaller chunks progressively
 /**
  * Retrieve the dialog data using API
  * @param {String} dialogId
@@ -90,14 +90,14 @@ const retrievePostData = async (postId, blogName, accessToken) => {
  * @returns {Object[]}
  */
 const retrieveDialogData = async (dialogId, accessToken) => {
-  const response = await fetch(`https://api.boosty.to/v1/dialog/${dialogId}?limit=1000`,
+  const response = await fetch(`https://api.boosty.to/v1/dialog/${dialogId}/message/?limit=300&reverse=true&offset=99999999`,
     {
       headers: { Authorization: `Bearer ${accessToken}` }
     }
   )
   const data = await response.json()
 
-  return data.messages.data.map(x => x.data).flat()
+  return data.data
 }
 
 /**
