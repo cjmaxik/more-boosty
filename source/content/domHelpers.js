@@ -350,7 +350,7 @@ const download = async (event) => {
   // Check if we are on the post or dialog page
   if (currentPageUrl.pathname.indexOf('/posts/') !== -1) {
     // if post, then use post ID from the URL
-    postLink = currentPageUrl
+    postLink = currentPageUrl.href
   } else if (
     currentPageUrl.pathname.indexOf('/app/messages') !== -1 &&
     currentPageUrl.searchParams.has('dialogId')
