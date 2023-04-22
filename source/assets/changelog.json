@@ -1,33 +1,35 @@
 {
   "latest": {
     "ru": [
-      "Исправлена ошибка скачивания на странице поста"
+      "Полностью переписаны функции для плеера ВК, в том числе скачивание видео.",
+      "Добавлена функция скачивания аудио.",
+      "ИЗВЕСТНАЯ ПРОБЛЕМА: видео в очень старых личных сообщениях (больше 300) могут не скачиваться. Исправление ожидается в будущих обновлениях."
     ],
     "en": [
-      "Fixed the video download issue on post pages"
+      "Fully rewritten VK player functions, including the video download.",
+      "Added the audio download function.",
+      "KNOWN ISSUE: the video from very old messages (more than 300) may not download. Fix is coming in the next updates."
     ]
   },
   "previous": {
     "ru": [
-      "Функция скачивания видео добавлена в личные сообщения. Спасибо Lo Lo за спонсирование данной функции!",
-      "ИЗВЕСТНАЯ ПРОБЛЕМА: видео в очень старых личных сообщениях (больше 300) могут не скачиваться. Исправление ожидается в будущих обновлениях."
+      "Функция скачивания видео добавлена в личные сообщения. Спасибо Lo Lo за спонсирование данной функции!"
     ],
     "en": [
-      "The video download feature now works in messages. Thank you, Lo Lo, for the funding!",
-      "KNOWN ISSUE: the video from very old messages (more than 300) may not download. Fix is coming in the next updates."
+      "The video download feature now works in messages. Thank you, Lo Lo, for the funding!"
     ]
   },
   "track": {
     "producer": "Matt Merty",
-    "name": "Happy (Original Mix)",
+    "name": "Wanderlust",
     "links": [
       {
         "name": "YouTube",
-        "link": "https://youtu.be/LzlsUuxD5Ig?ref=more_boosty"
+        "link": "https://youtu.be/L9ebQYLIERo?ref=more_boosty"
       },
       {
         "name": "Spotify",
-        "link": "https://open.spotify.com/track/5Xle3CK23ip8UQHHU7EpJ1?si=e024d8ec37dc45af&ref=more_boosty"
+        "link": "https://open.spotify.com/track/0ec8Ov01c2hoYtKO3I8Gzm?si=d3936adc0c0946d1&ref=more_boosty"
       }
     ]
   }
