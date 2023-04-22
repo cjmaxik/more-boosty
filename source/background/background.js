@@ -1,4 +1,6 @@
 import * as Cache from '../global/cache.js'
+import * as Api from '../global/boostyApi.js'
+import * as helpers from '../global/helpers.js'
 
 // Assets
 import iconImage from 'url:../assets/icon.png'
@@ -27,18 +29,75 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       saveTimestamp(message.id, message.timestamp)
       break
 
-    case 'retrievePostData':
-      retrievePostData(message.postId, message.blogName, message.accessToken).then(data => sendResponse(data))
-      return true
-
-    case 'retrieveDialogData':
-      retrieveDialogData(message.dialogId, message.accessToken).then(data => sendResponse(data))
+    case 'retrieveContentData':
+      retrieveContentData(message.metadata, message.accessToken).then(data => sendResponse(data))
       return true
 
     default:
       break
   }
 })
+
+/**
+ * Retrieve content data from Boosty API
+ * @param {Object} metadata
+ * @param {String} accessToken
+ * @returns {Object|null}
+ */
+const retrieveContentData = async (metadata, accessToken) => {
+  let key
+  let apiCall
+
+  console.log(metadata)
+
+  switch (metadata.type) {
+    case 'post':
+      key = `p:${metadata.id}`
+      apiCall = Api.blog
+      break
+
+    case 'dialog':
+      key = `d:${metadata.id}`
+      apiCall = Api.dialog
+      break
+
+    default:
+      return null
+  }
+
+  const cachedData = await Cache.read(key)
+  if (cachedData) return cachedData.data
+
+  const data = await apiCall(metadata, accessToken)
+
+  // We need videos only (localStorage is not that big)
+  const videos = filterVideos(data, metadata.type)
+
+  // 5 minutes is enough (in case the post was edited)
+  Cache.write(key, videos, 5)
+
+  console.log(`${metadata.postId} from API`, videos)
+  return videos
+}
+
+/**
+ * Returns the filtered post content (only videos)
+ * @param {Object[]} data
+ * @param {String} type
+ * @returns {Object[]|null}
+ */
+const filterVideos = (data, type) => {
+  if (type === 'dialog') {
+    data = data.map(message => message.data).flat()
+  }
+
+  return data.filter(block => block.type === 'ok_video')
+    .map(({ playerUrls, preview }) => {
+      const videoUrls = helpers.filterVideoUrls(playerUrls)
+      const videoId = helpers.parseVideoId(preview)
+      return { videoUrls, videoId }
+    })
+}
 
 /**
  * Save the current timestamp
@@ -60,45 +119,6 @@ const saveTimestamp = async (id, timestamp) => {
  * @returns {Object}
  */
 const retrieveTimestamp = async (id) => await Cache.read(`t:${id}`)
-
-// TODO: simplify retrievePostData and retrieveDialogData
-// and move business logic up, no need to unpack data here
-/**
- * Retrieve the post data using API
- * @param {String} postId
- * @param {String} blogName
- * @param {String} accessToken
- * @returns {Object[]}
- */
-const retrievePostData = async (postId, blogName, accessToken) => {
-  const response = await fetch(
-    `https://api.boosty.to/v1/blog/${blogName}/post/${postId}?component_limit=100`,
-    {
-      headers: { Authorization: `Bearer ${accessToken}` }
-    }
-  )
-  const data = await response.json()
-
-  return data.data
-}
-
-// TODO: Make this function aware of `offset` and use it to grab mesages in smaller chunks progressively
-/**
- * Retrieve the dialog data using API
- * @param {String} dialogId
- * @param {String} accessToken
- * @returns {Object[]}
- */
-const retrieveDialogData = async (dialogId, accessToken) => {
-  const response = await fetch(`https://api.boosty.to/v1/dialog/${dialogId}/message/?limit=300&reverse=true&offset=99999999`,
-    {
-      headers: { Authorization: `Bearer ${accessToken}` }
-    }
-  )
-  const data = await response.json()
-
-  return data.data
-}
 
 /**
  * Open options page

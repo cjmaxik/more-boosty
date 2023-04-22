@@ -1,12 +1,12 @@
 const STORAGE = chrome.storage.local
-const DEFAULT_TIMEOUT = 10080
+const DEFAULT_TIMEOUT = 24 * 60 * 7
 
 /**
  * Write to the cache
  * @public
- * @param {String} key Cache key60472349
+ * @param {String} key Cache key
  * @param {Object} data Data to write
- * @param {Number} [timeout=10080] Timeout (in seconds)
+ * @param {Number} [timeout=10080] Timeout (in minutes)
  */
 export const write = async (key, data, timeout = DEFAULT_TIMEOUT) => {
   timeout = generateTimeout(timeout)
@@ -28,7 +28,7 @@ export const write = async (key, data, timeout = DEFAULT_TIMEOUT) => {
  * Read from the cache
  * @public
  * @param {String} key
- * @param {Number} [timeout=10080] Timeout (in seconds)
+ * @param {Number} [timeout=10080] Timeout (in minutes)
  * @returns {Object}
  */
 export const read = async (key, timeout = DEFAULT_TIMEOUT) => {
@@ -49,7 +49,7 @@ export const read = async (key, timeout = DEFAULT_TIMEOUT) => {
     return data
   }
 
-  return {}
+  return null
 }
 
 /**
@@ -120,8 +120,8 @@ const existsAndNotExpired = (data) => {
 }
 
 /**
- * Generate a timeout value
- * @param {Number} [timeout=10080] Timeout (in seconds)
+ * Generate a timeout value from minutes
+ * @param {Number} [timeout=10080] Timeout (in minutes)
  * @returns
  */
 const generateTimeout = (timeout = DEFAULT_TIMEOUT) => {
