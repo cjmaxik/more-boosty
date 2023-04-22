@@ -2,5 +2,7 @@
   "files.exclude": {
     "**/distribution": true,
     "**/.parcel-cache": true
-  }
+  },
+  "standard.autoFixOnSave": true,
+  "javascript.format.enable": false
 }

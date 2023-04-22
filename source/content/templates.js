@@ -94,7 +94,7 @@ export const changelogModal = () => `
   </div>
 `
 
-export const videoDownloadModal = (title, links) => `
+export const videoDownloadModal = (links) => `
 <div class="ScrollBox_scrollContainer_g0g0j Popup_wrapper_ZeN1U FadeIn_fade_ecikC FadeIn_entered_uFjQ8 fade_animate" id="MB_video_download">
   <div class="PopupContent_block_P9UTg Popup_block_EdudK">
       <span class="Icon_block_Hvwi5 PopupContent_close_s4F2c" id="MB_video_download_close">
@@ -104,13 +104,13 @@ export const videoDownloadModal = (title, links) => `
       <div class="PopupContent_title_IHD2G">
           <p>
               <strong>
-                  ${t('download_video_modal_title')}: ${title}
+                  ${t('download_video_modal_title')}:
               </strong>
           </p>
       </div>
 
       <div class="PopupContent_content_A2EA3" style="display: grid !important;">
-          ${generateVideoDownloadLinks(title, links)}
+          ${generateVideoDownloadLinks(links)}
       </div>
   </div>
 </div>
@@ -137,6 +137,21 @@ export const downloadButton = () => `
       </div>
   </div>
   <div class="container controls-element v-1fkqq1h"></div>
+`
+
+export const audioDownloadButton = (url) => `
+  <button
+    class="Link_block_f6iQc AudioPlayer_link_juPqV MB_audio_download"
+    style="background-color: initial !important; cursor: pointer !important;"
+    data-url="${url}"
+  >
+    <span class="Icon_block_Hvwi5 AudioPlayer_iconDownload_wqoN1 Messages_audioPlayerIconDownload_A3oqM">
+      <svg class="Icon_svg__DRUh">
+        <use xlink:href="#svg-icon-download">
+        </use>
+      </svg>
+    </span>
+  </button>
 `
 
 export const timestampIndicator = (position) => `
@@ -223,10 +238,10 @@ const generateChangelogMusicTrack = () => {
  * @param {Object[]} urls
  * @returns
  */
-const generateVideoDownloadLinks = (title, urls) => {
+const generateVideoDownloadLinks = (urls) => {
   let text = ''
   for (const url of urls) {
-    text += safeHTML`<button data-url="${url.url}" data-title="${title}" class="MB_video_download_link BaseButton_button_yO8r5 OutlinedButton_button_gVLJD">
+    text += safeHTML`<button data-url="${url.url}" class="MB_video_download_link BaseButton_button_yO8r5 OutlinedButton_button_gVLJD">
       ${t(`video_quality_${url.type}`)}
     </button>`
   }
