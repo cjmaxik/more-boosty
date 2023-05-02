@@ -24,8 +24,11 @@
 > - Can be installed on any Chromium browser - Opera (GX), Vivaldi, etc.
 > - In Microsoft Edge, click "Allow extensions from other stores" fisrt (is asked)
 
-### Where is the Firefox version
-Unfortunately, Firefox does not support some crucial functions *(PiP API and background service workers)*. Firefox version might be released in a foreseeable future in a somewhat limited rendition.
+### Firefox version when?
+There are currently no plans to support Firefox.
+1. Firefox does not support some crucial functions *(PiP API and background service workers)*.
+2. Partial support will require an extensive tooling changes.
+3. There is no demand for the Firefox version.
 
 ## Honorable mentions
 - [fregante](https://github.com/fregante)
