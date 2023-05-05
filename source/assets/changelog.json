@@ -1,22 +1,26 @@
 {
   "latest": {
     "ru": [
-      "Полностью переписаны функции для плеера ВК, в том числе скачивание видео.",
-      "Добавлена функция скачивания аудио.",
+      "Исправлена проблема, когда видео/аудио начиналось сначала при наличии сохраненного места последнего воспроизведения.",
+      "Исправлена проблема, когда расширение могло пропускать блоки видео/аудио.",
+      "Исправлены стили режима театра.",
       "ИЗВЕСТНАЯ ПРОБЛЕМА: видео в очень старых личных сообщениях (больше 300) могут не скачиваться. Исправление ожидается в будущих обновлениях."
     ],
     "en": [
-      "Fully rewritten VK player functions, including the video download.",
-      "Added the audio download function.",
-      "KNOWN ISSUE: the video from very old messages (more than 300) may not download. Fix is coming in the next updates."
+      "Fixed an issue when video/audio starts from the beginning while the last timestamp is present.",
+      "Fixed an issue when some video/audio blocks might be skipped.",
+      "Fixed styles in theater mode.",
+      "KNOWN ISSUE: the video from very old messages (more than 300) may not download. Fix is coming in the upcoming updates."
     ]
   },
   "previous": {
     "ru": [
-      "Функция скачивания видео добавлена в личные сообщения. Спасибо Lo Lo за спонсирование данной функции!"
+      "Полностью переписаны функции для плеера ВК, в том числе скачивание видео.",
+      "Добавлена функция скачивания аудио."
     ],
     "en": [
-      "The video download feature now works in messages. Thank you, Lo Lo, for the funding!"
+      "Fully rewritten VK player functions, including the video download.",
+      "Added the audio download function."
     ]
   },
   "track": {
