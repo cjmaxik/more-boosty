@@ -48,7 +48,8 @@ const retrieveContentData = async (metadata, accessToken) => {
   let key
   let apiCall
 
-  console.log(metadata)
+  console.group(`Content data for ${metadata.id}`)
+  console.log('Metadata:', metadata)
 
   switch (metadata.type) {
     case 'post':
@@ -66,7 +67,13 @@ const retrieveContentData = async (metadata, accessToken) => {
   }
 
   const cachedData = await Cache.read(key)
-  if (cachedData) return cachedData.data
+  if (cachedData) {
+    console.log('✅ Retrieving from cache')
+    console.groupEnd()
+    return cachedData.data
+  } else {
+    console.log('⚠️ Cache is empty, retrieving from API')
+  }
 
   const data = await apiCall(metadata, accessToken)
 
@@ -76,7 +83,8 @@ const retrieveContentData = async (metadata, accessToken) => {
   // 5 minutes is enough (in case the post was edited)
   Cache.write(key, videos, 5)
 
-  console.log(`${metadata.postId} from API`, videos)
+  console.log(`✅ ${metadata.id} from API`, videos)
+  console.groupEnd()
   return videos
 }
 
@@ -118,7 +126,12 @@ const saveTimestamp = async (id, timestamp) => {
  * @param {String} id
  * @returns {Object}
  */
-const retrieveTimestamp = async (id) => await Cache.read(`t:${id}`)
+const retrieveTimestamp = async (id) => {
+  console.group(`Timestamp data for ${id}`)
+  const timestamp = await Cache.read(`t:${id}`)
+  console.groupEnd()
+  return timestamp
+}
 
 /**
  * Open options page

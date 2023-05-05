@@ -92,10 +92,10 @@ export const injectFullLayout = () => {
  * Inject stream page stuff
  * @param {Element} element
  */
-export const injectStreamPageChanges = (enabled) => {
+export const injectStreamPageChanges = (isActive) => {
   if (!body) body = document.querySelector('body')
 
-  if (enabled) {
+  if (isActive) {
     body.classList.add('MB_stream')
     window.addEventListener('scroll', scrollEvent)
   } else {

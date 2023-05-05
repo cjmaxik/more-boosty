@@ -21,6 +21,7 @@ export const write = async (key, data, timeout = DEFAULT_TIMEOUT) => {
   console.group(`Cache write for ${key}`)
   console.log('Data:', data)
   console.log('Expires on:', new Date(timeout))
+  console.log('Expires in:', msToReadable(timeout - new Date()))
   console.groupEnd()
 }
 
@@ -43,12 +44,15 @@ export const read = async (key, timeout = DEFAULT_TIMEOUT) => {
   } else {
     console.log('No data')
   }
-  console.groupEnd()
 
   if (existsAndNotExpired(data)) {
+    console.log('✅ Not expired')
+    console.groupEnd()
     return data
   }
 
+  console.log('⚠️ Expired, returning `null`')
+  console.groupEnd()
   return null
 }
 

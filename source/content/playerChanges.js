@@ -11,32 +11,32 @@ const contentCache = new Map()
  */
 export const prepareVideoPlayer = async (event, options) => {
   const playerRootNode = event.currentTarget.getRootNode()
-  console.log('player', playerRootNode)
+  console.debug('player', playerRootNode)
 
   const playerWrapper = playerRootNode.querySelector('div.player-wrapper')
-  console.log('playerWrapper', playerWrapper)
+  console.debug('playerWrapper', playerWrapper)
 
   // Get content metadata
   const contentMetadata = getContentMetadata(playerWrapper)
-  console.log('contentMetadata', contentMetadata)
+  console.debug('contentMetadata', contentMetadata)
   if (contentMetadata.type === 'unknown') {
-    console.error('We don`t know this type of content.')
+    console.warn('We don`t know this type of content.', playerWrapper)
+  } else {
+    // Get video ID from preview URL
+    const videoId = getVideoId(playerWrapper)
+    console.debug('videoId', videoId)
+
+    // Get content components
+    const contentComponents = await getContentComponents(contentMetadata)
+    contentComponents?.forEach(component => {
+      contentCache.set(component.videoId, component.videoUrls)
+    })
+    console.debug('contentComponents', contentComponents)
+    console.debug('contentCache', contentCache)
   }
 
-  // Get video ID from preview (btoa of a preview URL)
-  const videoId = getVideoId(playerWrapper)
-  console.log('videoId', videoId)
-
-  // Get content components
-  const contentComponents = await getContentComponents(contentMetadata)
-  contentComponents.forEach(component => {
-    contentCache.set(component.videoId, component.videoUrls)
-  })
-  console.log('contentComponents', contentComponents)
-  console.log('contentCache', contentCache)
-
   // Inject controls
-  injectVideoControls(playerWrapper, options)
+  injectVideoControls(playerWrapper, contentMetadata.type !== 'unknown', options)
 
   // Force video quality
   if (options.force_video_quality) forceVideoQuality(playerWrapper, options.video_quality)
@@ -82,9 +82,10 @@ const injectAudioControls = (element) => {
 /**
  * Inject VK player controls
  * @param {Element} playerWrapper
+ * @param {boolean} canBeDownloaded
  * @param {OptionsSync.UserOptions} options
  */
-const injectVideoControls = (playerWrapper, options) => {
+const injectVideoControls = (playerWrapper, canBeDownloaded, options) => {
   const controls = playerWrapper.querySelector('div.controls')
 
   // Add PiP button (for supported browsers)
@@ -94,8 +95,10 @@ const injectVideoControls = (playerWrapper, options) => {
   }
 
   // Add Download button
-  controls.lastElementChild.insertAdjacentHTML('beforeBegin', templates.downloadButton())
-  playerWrapper.querySelector('div.MB_download').addEventListener('click', () => prepareVideoDownload(playerWrapper))
+  if (canBeDownloaded) {
+    controls.lastElementChild.insertAdjacentHTML('beforeBegin', templates.downloadButton())
+    playerWrapper.querySelector('div.MB_download').addEventListener('click', () => prepareVideoDownload(playerWrapper))
+  }
 }
 
 /**
@@ -104,10 +107,10 @@ const injectVideoControls = (playerWrapper, options) => {
  */
 const prepareVideoDownload = async (playerWrapper) => {
   const videoId = getVideoId(playerWrapper)
-  console.log('videoId', videoId)
+  console.debug('videoId', videoId)
 
   const videoUrls = contentCache.get(videoId)
-  console.log('videoUrls', videoUrls)
+  console.debug('videoUrls', videoUrls)
 
   injectVideoDownloadModal(videoUrls)
 }
@@ -121,7 +124,7 @@ const injectVideoDownloadModal = (links) => {
   if (document.fullscreenElement) {
     document
       .exitFullscreen()
-      .then(() => console.log('Document Exited from Full screen mode'))
+      .then(() => console.debug('Document Exited from Full screen mode'))
       .catch((err) => console.error(err))
   }
 
@@ -156,7 +159,7 @@ const injectVideoDownloadModal = (links) => {
 const generateDownloadLink = (event) => {
   const element = event.currentTarget
   const url = element.dataset.url
-  // const title = element.dataset.title // see below
+  // const title = element.dataset.title // invalidates the context, do not use!
 
   if (!url) return
 
@@ -200,7 +203,7 @@ const lastAudioTimestamp = (playerWrapper) => {
  * @param {Element} content
  */
 const playContentEvent = (content, playerWrapper) => {
-  content.addEventListener('play', () => contentIsLoaded(content, playerWrapper), { once: true })
+  content.addEventListener('timeupdate', () => contentIsLoaded(content, playerWrapper), { once: true })
 }
 
 /**
@@ -212,8 +215,10 @@ const contentIsLoaded = async (content, playerWrapper) => {
   const contentID = getContentID(content)
 
   if (!contentID) {
-    console.error('Cannot find a content ID for', content)
+    console.warn('Cannot find a content ID for', content)
   }
+
+  console.debug('content duration:', content.duration)
   if (content.duration <= 180) return
 
   const savedTimestamp = await retrieveTimestamp(contentID)
@@ -226,7 +231,7 @@ const contentIsLoaded = async (content, playerWrapper) => {
   let previouslySavedTimestamp = 0
   content.addEventListener('timeupdate', async () => {
     if (!timeToSave) return
-    console.log('time update', content.currentTime)
+    console.debug('time update', content.currentTime)
 
     let currentTimestamp = content.currentTime
     if (
@@ -242,7 +247,7 @@ const contentIsLoaded = async (content, playerWrapper) => {
     // Disable the function call
     timeToSave = false
 
-    console.log(timeToSave, currentTimestamp, savedTimestamp, previouslySavedTimestamp)
+    console.debug(timeToSave, currentTimestamp, savedTimestamp, previouslySavedTimestamp)
     if (
       // Prevents useless caching right after starts playing
       currentTimestamp !== savedTimestamp &&
@@ -432,22 +437,22 @@ const generatePostMetadata = (url) => {
  */
 const getVideoId = (playerWrapper) => {
   if ('videoId' in playerWrapper.dataset) {
-    console.log('videoId from dataset', playerWrapper.dataset.videoId)
+    console.debug('videoId from dataset', playerWrapper.dataset.videoId)
     return playerWrapper.dataset.videoId
   }
 
   const previewContainer = playerWrapper.querySelector('div.container[style*=background-image]')
-  console.log('videoPreviewContainer', previewContainer)
+  console.debug('videoPreviewContainer', previewContainer)
 
   const previewAttr = previewContainer.style.backgroundImage
-  console.log('videoPreviewAttr', previewAttr)
+  console.debug('videoPreviewAttr', previewAttr)
 
   const regex = /url\("(.*)"\)/gm
   const previewUrl = regex.exec(previewAttr)[1]
 
   const videoId = helpers.parseVideoId(previewUrl)
   playerWrapper.dataset.videoId = videoId
-  console.log('videoId from preview', videoId)
+  console.debug('videoId from preview', videoId)
 
   return videoId
 }
