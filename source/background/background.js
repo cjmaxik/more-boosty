@@ -159,7 +159,7 @@ chrome.runtime.onInstalled.addListener((details) => {
       iconUrl: iconImage,
       title: chrome.i18n.getMessage('extension_has_been_updated'),
       message: '',
-      contextMessage: 'v' + details.previousVersion,
+      contextMessage: `v${chrome.runtime.getManifest().version}`,
       buttons: [
         {
           title: chrome.i18n.getMessage('changelog')
