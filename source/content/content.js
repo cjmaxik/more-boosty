@@ -34,9 +34,15 @@ const processVideoPlayers = () => {
 
 /**
  * Inject extension icon to the top left menu
+ * @returns {boolean}
  */
 const injectExtensionIcon = () => {
   const topMenuLeft = body.querySelector('div[class*=TopMenu_left_]')
+  if (!topMenuLeft) {
+    console.warn('No topMenu found??? skipping for now')
+    return false
+  }
+
   domHelpers.injectIconInTopMenu(topMenuLeft)
 
   if (location.hash && location.hash.includes('mb_update')) {
@@ -45,6 +51,8 @@ const injectExtensionIcon = () => {
     const changelogButton = body.querySelector('a#MB_changelog')
     changelogButton.click()
   }
+
+  return true
 }
 
 /**
@@ -83,7 +91,7 @@ const main = async () => {
   }
 
   // 1. Permanent changes
-  injectExtensionIcon()
+  const isExtensionIconInjected = injectExtensionIcon()
   injectFullLayout()
   processAudioPlayers()
   processVideoPlayers()
@@ -97,6 +105,11 @@ const main = async () => {
 
       // Checks for streamer page
       for (const mutation of mutations) {
+        if (!isExtensionIconInjected && mutation.target.id === 'root') {
+          console.debug('deffered injectExtensionIcon()')
+          injectExtensionIcon()
+        }
+
         for (const node of mutation.addedNodes) {
           if (node.classList?.value.includes('StreamPage_block_')) {
             processTheaterMode(true)
