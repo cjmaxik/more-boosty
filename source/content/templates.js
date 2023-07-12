@@ -140,18 +140,49 @@ export const downloadButton = () => `
 `
 
 export const audioDownloadButton = (url) => `
-  <button
-    class="Link_block_f6iQc AudioPlayer_link_juPqV MB_audio_download"
-    style="background-color: initial !important; cursor: pointer !important;"
-    data-url="${url}"
-  >
-    <span class="Icon_block_Hvwi5 AudioPlayer_iconDownload_wqoN1 Messages_audioPlayerIconDownload_A3oqM">
+  <div class="AudioPlayer_header_JEUAU">
+    <button
+      class="Link_block_f6iQc AudioPlayer_link_juPqV MB_audio_download"
+      style="background-color: initial !important; cursor: pointer !important;"
+      data-url="${url}"
+    >
+      <span class="Icon_block_Hvwi5 AudioPlayer_iconDownload_wqoN1 Messages_audioPlayerIconDownload_A3oqM">
+        <svg class="Icon_svg__DRUh">
+          <use xlink:href="#svg-icon-download">
+          </use>
+        </svg>
+      </span>
+    </button>
+  </div>
+`
+
+export const audioSpeedController = (initialPlaybackRate) => 
+`
+  <div class="AudioPlayer_header_JEUAU MB_audio_speed_controller">
+    <button class="Link_block_f6iQc MB_audio_speed_decrease"
+      style="background-color: initial !important; cursor: pointer !important; padding: 0;">
+    <span class="Icon_block_Hvwi5" style="height:20px; width:20px; margin:0 !important">
       <svg class="Icon_svg__DRUh">
-        <use xlink:href="#svg-icon-download">
-        </use>
+        <path fill-rule="evenodd" d="M18 10a1 1 0 01-1 1H3a1 1 0 110-2h14a1 1 0 011 1z"/>
       </svg>
     </span>
-  </button>
+    </button>
+
+    <span class="Icon_block_Hvwi5 Current_Playback_Rate"
+      style="background-color: initial !important; cursor: pointer !important; min-width:2.7em; max-width:2.5em;">
+      x${initialPlaybackRate}
+    </span>
+
+    <button class="Link_block_f6iQc MB_audio_speed_increase"
+      style="background-color: initial !important; cursor: pointer !important;padding:0;">
+      <span class="Icon_block_Hvwi5" style="height:20px; width:20px; margin:0 !important">
+        <svg class="Icon_svg__DRUh">
+          <use xlink:href="#svg-icon-plus-default">
+          </use>
+        </svg>
+      </span>
+    </button>
+  </div>
 `
 
 export const timestampIndicator = (position) => `

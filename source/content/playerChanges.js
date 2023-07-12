@@ -53,7 +53,7 @@ export const prepareVideoPlayer = async (event, options) => {
  */
 export const prepareAudioPlayer = async (element, options) => {
   // Inject controls
-  injectAudioControls(element)
+  injectAudioControls(element, options)
 
   // Save/retrieve timestamp
   if (options.save_last_timestamp) lastAudioTimestamp(element, options)
@@ -63,18 +63,79 @@ export const prepareAudioPlayer = async (element, options) => {
  * PRIVATE FUNCTIONS
  */
 
-const injectAudioControls = (element) => {
+const injectAudioControls = (element, options) => {
   const audio = element.querySelector('audio')
   const audioUrl = audio.src
   const playerTitle = element.querySelector('div[class*=AudioPlayer_title]')
 
   if (audioUrl) {
-    playerTitle.insertAdjacentHTML('afterEnd', templates.audioDownloadButton(audioUrl))
-    const link = element.querySelector('button.MB_audio_download')
+    const playbackRate = options.force_audio_playback_rate ? options.audio_playback_rate : 1.0
+    const buttonsWrapper = document.createElement('div')
+    buttonsWrapper.style.display = 'flex'
+    buttonsWrapper.style.justifyContent ='center'
+    buttonsWrapper.style.marginLeft = 'auto'
+    buttonsWrapper.innerHTML = templates.audioSpeedController(playbackRate) + templates.audioDownloadButton(audioUrl)
+    audio.playbackRate = playbackRate
+    
+    // Add speed control and download buttons to player title
+    playerTitle.insertAdjacentElement('afterend', buttonsWrapper)
 
+    const link = element.querySelector('div button.MB_audio_download')
     link.addEventListener('click', (event) => {
       event.preventDefault()
       generateDownloadLink(event)
+    })
+
+    const decreaseButton = element.querySelector('div button.MB_audio_speed_decrease')
+    const increaseButton = element.querySelector('div button.MB_audio_speed_increase')
+    const playbackRateElement = element.querySelector('span.Current_Playback_Rate')
+
+    decreaseButton.addEventListener('click', (event) => {
+      event.preventDefault()
+      audio.playbackRate = (audio.playbackRate - 0.25 > 0.25) ? audio.playbackRate - 0.25 : 0.25
+
+      const currentPlaybackRateElements = document.querySelectorAll('span.Current_Playback_Rate')
+      currentPlaybackRateElements.forEach((element) => {
+        element.textContent = `x${audio.playbackRate}`
+      });
+
+      const currentAudioElements = document.querySelectorAll('audio')
+      currentAudioElements.forEach((element) => {
+        element.playbackRate = audio.playbackRate
+      });
+    })
+
+    increaseButton.addEventListener('click', (event) => {
+      event.preventDefault()
+      audio.playbackRate = (audio.playbackRate + 0.25 < 4.0) ? audio.playbackRate + 0.25 : 4.0
+
+      const currentPlaybackRateElements = document.querySelectorAll('span.Current_Playback_Rate')
+      currentPlaybackRateElements.forEach((element) => {
+        element.textContent = `x${audio.playbackRate}`
+      });
+
+      const currentAudioElements = document.querySelectorAll('audio')
+      currentAudioElements.forEach((element) => {
+        element.playbackRate = audio.playbackRate
+      });
+    })
+
+    playbackRateElement.addEventListener('click', (event) => {
+      if(audio.playbackRate !== 1.0) {
+        audio.playbackRate = 1.0
+      } else {
+        audio.playbackRate = playbackRate
+      }
+
+      const currentPlaybackRateElements = document.querySelectorAll('span.Current_Playback_Rate')
+      currentPlaybackRateElements.forEach((element) => {
+        element.textContent = `x${playbackRate}`
+      });
+
+      const currentAudioElements = document.querySelectorAll('audio')
+      currentAudioElements.forEach((element) => {
+        element.playbackRate = playbackRate
+      });
     })
   }
 }

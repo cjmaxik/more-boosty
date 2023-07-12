@@ -77,5 +77,11 @@
   },
   "download_video_modal_title": {
     "message": "Выбери качество видео"
+  },
+  "options_force_audio_playback_rate": {
+    "message": "Изменять скорость воспроизведения аудио"
+  },
+  "options_audio_playback_rate": {
+    "message": "Скорость аудио"
   }
 }
