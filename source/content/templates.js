@@ -156,7 +156,7 @@ export const audioDownloadButton = (url) => `
   </div>
 `
 
-export const audioSpeedController = (initialPlaybackRate) => 
+export const audioSpeedController = (initialPlaybackRate) =>
 `
   <div class="AudioPlayer_header_JEUAU MB_audio_speed_controller">
     <button class="Link_block_f6iQc MB_audio_speed_decrease"

@@ -72,11 +72,11 @@ const injectAudioControls = (element, options) => {
     const playbackRate = options.force_audio_playback_rate ? options.audio_playback_rate : 1.0
     const buttonsWrapper = document.createElement('div')
     buttonsWrapper.style.display = 'flex'
-    buttonsWrapper.style.justifyContent ='center'
+    buttonsWrapper.style.justifyContent = 'center'
     buttonsWrapper.style.marginLeft = 'auto'
     buttonsWrapper.innerHTML = templates.audioSpeedController(playbackRate) + templates.audioDownloadButton(audioUrl)
     audio.playbackRate = playbackRate
-    
+
     // Add speed control and download buttons to player title
     playerTitle.insertAdjacentElement('afterend', buttonsWrapper)
 
@@ -97,12 +97,12 @@ const injectAudioControls = (element, options) => {
       const currentPlaybackRateElements = document.querySelectorAll('span.Current_Playback_Rate')
       currentPlaybackRateElements.forEach((element) => {
         element.textContent = `x${audio.playbackRate}`
-      });
+      })
 
       const currentAudioElements = document.querySelectorAll('audio')
       currentAudioElements.forEach((element) => {
         element.playbackRate = audio.playbackRate
-      });
+      })
     })
 
     increaseButton.addEventListener('click', (event) => {
@@ -112,16 +112,16 @@ const injectAudioControls = (element, options) => {
       const currentPlaybackRateElements = document.querySelectorAll('span.Current_Playback_Rate')
       currentPlaybackRateElements.forEach((element) => {
         element.textContent = `x${audio.playbackRate}`
-      });
+      })
 
       const currentAudioElements = document.querySelectorAll('audio')
       currentAudioElements.forEach((element) => {
         element.playbackRate = audio.playbackRate
-      });
+      })
     })
 
     playbackRateElement.addEventListener('click', (event) => {
-      if(audio.playbackRate !== 1.0) {
+      if (audio.playbackRate !== 1.0) {
         audio.playbackRate = 1.0
       } else {
         audio.playbackRate = playbackRate
@@ -130,12 +130,12 @@ const injectAudioControls = (element, options) => {
       const currentPlaybackRateElements = document.querySelectorAll('span.Current_Playback_Rate')
       currentPlaybackRateElements.forEach((element) => {
         element.textContent = `x${playbackRate}`
-      });
+      })
 
       const currentAudioElements = document.querySelectorAll('audio')
       currentAudioElements.forEach((element) => {
         element.playbackRate = playbackRate
-      });
+      })
     })
   }
 }
