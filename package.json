@@ -21,14 +21,14 @@
   },
   "dependencies": {
     "html-template-tag": "^4.0.1",
-    "minstyle.io": "^2.0.1",
+    "minstyle.io": "^2.0.2",
     "webext-base-css": "^1.4.3",
-    "webext-options-sync": "^4.0.1"
+    "webext-options-sync": "^4.2.1"
   },
   "devDependencies": {
-    "@parcel/config-webextension": "^2.8.3",
-    "@parcel/transformer-sass": "^2.8.3",
-    "parcel": "^2.8.3",
+    "@parcel/config-webextension": "^2.9.3",
+    "@parcel/transformer-sass": "^2.9.3",
+    "parcel": "^2.9.3",
     "shx": "^0.3.4",
     "standard": "*"
   },

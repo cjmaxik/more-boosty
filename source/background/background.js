@@ -145,6 +145,15 @@ const openOptionsPage = () => {
  */
 chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
+    chrome.notifications.create({
+      type: 'basic',
+      iconUrl: iconImage,
+      title: chrome.i18n.getMessage('options_restart_required'),
+      message: chrome.i18n.getMessage('options_restart_alert'),
+      requireInteraction: true,
+      silent: false
+    })
+
     openOptionsPage()
     return
   }
@@ -157,8 +166,8 @@ chrome.runtime.onInstalled.addListener((details) => {
     chrome.notifications.create({
       type: 'basic',
       iconUrl: iconImage,
-      title: chrome.i18n.getMessage('extension_has_been_updated'),
-      message: '',
+      title: '',
+      message: chrome.i18n.getMessage('extension_has_been_updated'),
       contextMessage: `v${chrome.runtime.getManifest().version}`,
       buttons: [
         {
