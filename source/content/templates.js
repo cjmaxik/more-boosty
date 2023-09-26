@@ -44,7 +44,7 @@ export const changelogButton = () => `
 `
 
 export const changelogModal = () => `
-  <div class="ScrollBox_scrollContainer_g0g0j Popup_wrapper_ZeN1U FadeIn_fade_ecikC FadeIn_entered_uFjQ8 fade_animate" id="MB_changelog_modal">
+  <div class="ScrollBox_scrollContainer_g0g0j Popup_wrapper_ZeN1U FadeIn_fade_ecikC FadeIn_entered_uFjQ8 fade_animate" id="MB_changelog_modal" style="z-index: 99999999;">
       <div class="PopupContent_block_P9UTg Popup_block_EdudK">
           <span class="Icon_block_Hvwi5 PopupContent_close_s4F2c" id="MB_changelog_close">
               <svg class="Icon_svg__DRUh"><use xlink:href="#svg-icon-close"></use></svg>
@@ -95,7 +95,7 @@ export const changelogModal = () => `
 `
 
 export const videoDownloadModal = (links) => `
-<div class="ScrollBox_scrollContainer_g0g0j Popup_wrapper_ZeN1U FadeIn_fade_ecikC FadeIn_entered_uFjQ8 fade_animate" id="MB_video_download">
+<div class="ScrollBox_scrollContainer_g0g0j Popup_wrapper_ZeN1U FadeIn_fade_ecikC FadeIn_entered_uFjQ8 fade_animate" id="MB_video_download" style="z-index: 99999999;">
   <div class="PopupContent_block_P9UTg Popup_block_EdudK">
       <span class="Icon_block_Hvwi5 PopupContent_close_s4F2c" id="MB_video_download_close">
           <svg class="Icon_svg__DRUh"><use xlink:href="#svg-icon-close"></use></svg>
@@ -117,7 +117,7 @@ export const videoDownloadModal = (links) => `
 `
 
 export const pipButton = () => `
-  <div class="container controls-element v-1fkqq1h MB_pip">
+  <div class="container controls-element-indent-right v-1fkqq1h MB_pip">
       <div role="button" tabindex="0" title="${t('content_pip')}">
           <svg class="icon v-daygaf" xmlns="http://www.w3.org/2000/svg">
               <g fill="#fff" fill-rule="evenodd">

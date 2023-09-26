@@ -411,6 +411,13 @@ const getContentMetadata = (playerWrapper) => {
     return generatePostMetadata(postLink)
   }
 
+  // Post in Media tab
+  const mediaContent = playerRoot.closest('div[class*=MediaViewer_root_]')
+  if (mediaContent) {
+    const mediaLink = mediaContent.querySelector('a[class*=GoToPostButton_link_]').href
+    return generatePostMetadata(mediaLink)
+  }
+
   // Other cases (may be author bio or various blocks)
   return {
     type: 'unknown'
