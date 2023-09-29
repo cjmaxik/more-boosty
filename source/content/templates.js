@@ -17,24 +17,11 @@ if (uiLang !== 'ru' || uiLang !== 'en') {
   uiLang = 'ru'
 }
 
-export const optionsLink = () => `
-  <a class="Link_block_f6iQc MiniProfile_link_rQTY2" href="#" id="MB_options">
-      <div class="DropdownItem_block_EtyZL DropdownItem_blockClickable_hJXfh">
-          <div class="ProfileDropdownItem_item_oHFvi">
-              <span class="Icon_block_Hvwi5 ProfileDropdownItem_icon_iNRrH">
-                  <img src="${iconImage}" class="MB_icon" />
-              </span>
-              ${t('content_options_link')}
-          </div>
-      </div>
-  </a>
-`
-
 export const changelogButton = () => `
-  <div class="TopMenu_messageContainer_bwglz append_animate" style="padding-left: 10px;" >
+  <div class="TopMenu_messageContainer_bwglz MB_changelogButton append_animate">
       <a class="TopMenu_messagesContainer_hzgjz" href="#" id="MB_changelog" title="${t('content_about')}">
           <span class="Icon_block_Hvwi5 TopMenu_iconMessages_zy_w6">
-              <img src="${iconImage}" style="height: 20px;" />
+              <img src="${iconImage}" class="MB_icon"/>
           </span>
           <span class="TopMenu_messageCaption_s_h7T" style="text-transform: initial;">
               v${version}
@@ -44,7 +31,7 @@ export const changelogButton = () => `
 `
 
 export const changelogModal = () => `
-  <div class="ScrollBox_scrollContainer_g0g0j Popup_wrapper_ZeN1U FadeIn_fade_ecikC FadeIn_entered_uFjQ8 fade_animate" id="MB_changelog_modal" style="z-index: 99999999;">
+  <div class="ScrollBox_scrollContainer_g0g0j Popup_wrapper_ZeN1U FadeIn_fade_ecikC FadeIn_entered_uFjQ8 MB_changelogModal fade_animate" id="MB_changelog_modal" style="z-index: 99999999;">
       <div class="PopupContent_block_P9UTg Popup_block_EdudK">
           <span class="Icon_block_Hvwi5 PopupContent_close_s4F2c" id="MB_changelog_close">
               <svg class="Icon_svg__DRUh"><use xlink:href="#svg-icon-close"></use></svg>
@@ -81,8 +68,8 @@ export const changelogModal = () => `
               </div>
           </div>
 
-          <div class="Buttons_buttons_BbEpA" style="margin-top: 40px;">
-              <a href="https://boosty.to/cjmaxik?ref=more_boosty" rel="noreferref noopener nofollow" target="_blank" class="BaseButton_button_yO8r5 ContainedButton_button_mJG1l ContainedButton_colorDefault_fJta6" style="color: rgb(232, 230, 227);">
+          <div class="ChangePhone_buttons_vP_uE Buttons_root_X0BDd">
+              <a href="https://boosty.to/cjmaxik?ref=more_boosty" rel="noreferref noopener nofollow" target="_blank" class="BaseButton_button_yO8r5 ContainedButton_button_mJG1l ContainedButton_colorDefault_fJta6">
                   ${t('options_boosty_link')}
               </a>
 

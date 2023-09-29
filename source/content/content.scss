@@ -21,45 +21,93 @@
 }
 
 body.MB_active {
+
+  // Main layout
   div[class*=Layout_content_] {
     width: 95% !important;
-  }
-
-  div[class*=PostSubscriptionBlock_container_] {
-    width: 100% !important;
+    transition: .2s;
   }
 
   div[class*=Layout_grid_] {
-    display: flex !important;
     justify-content: space-between !important;
   }
 
+  // Columns overrides
   div[class*=Layout_threeColsLeft_] {
-    min-width: 255px !important;
+    min-width: 255px;
   }
 
   div[class*=Layout_threeColsCenter_] {
-    min-width: 575px !important;
     width: 100% !important;
   }
 
   div[class*=Layout_threeColsRight_] {
-    min-width: 270px !important;
+    min-width: 255px;
   }
 
-  div[class*=Post_container_] {
+  // Post
+  div[class*=Post_root_] {
     width: 100% !important;
   }
 
-  div.ce-block__content {
-    max-width: 100% !important;
+  // Audio in Media tab
+  article[class*=MediaAlbumPostFeedItem_root_] {
+    width: 100% !important;
   }
 
+  // Locked post content
+  div[class*=PostSubscriptionBlock_container_] {
+    width: 100% !important;
+  }
+
+  // Teaser overlay
   div[class*=TeaserOverlay_container_] {
-    width: 100% !important;
+    width: 100% !important
   }
 }
 
+// Changelog modal animations
+.append_animate {
+  animation: append-animate .15s ease;
+}
+
+.fade_animate {
+  animation: fade-animate .15s ease;
+}
+
+// Changelog button
+img.MB_icon {
+  height: 20px;
+}
+
+div.MB_changelogButton {
+  margin-left: 10px;
+}
+
+a[class*=TopMenu_messagesContainer_] {
+  img.MB_icon {
+    filter: grayscale(100%);
+    transition: .2s;
+  }
+
+  &:hover {
+    img.MB_icon {
+      filter: grayscale(0%);
+      transition: .2s;
+    }
+  }
+}
+
+// Changelog modal
+div.MB_changelogModal {
+  a[class*=ContainedButton_colorDefault_] {
+    &:visited {
+      color: white !important;
+    }
+  }
+}
+
+// Stream page
 body.MB_stream {
   div#topMenu {
     position: fixed !important;
@@ -86,47 +134,4 @@ body.MB_stream {
     height: 100vh !important;
     max-height: 100vh !important;
   }
-}
-
-.append_animate {
-  animation: append-animate .15s ease;
-}
-
-.fade_animate {
-  animation: fade-animate .15s ease;
-}
-
-img.MB_icon {
-  height: 18px !important;
-}
-
-div[class*=ProfileDropdownItem_item_] {
-  img.MB_icon {
-    filter: grayscale(100%);
-  }
-
-  &:hover {
-    img.MB_icon {
-      filter: grayscale(0);
-      transition: .2s;
-    }
-  }
-}
-
-a[class*=TopMenu_messagesContainer_] {
-  img {
-    filter: grayscale(100%);
-  }
-
-  &:hover {
-    img {
-      filter: grayscale(0);
-      transition: .2s;
-    }
-  }
-}
-
-button.MB_video_download_link {
-  margin-bottom: 1rem;
-  text-transform: none !important;
 }

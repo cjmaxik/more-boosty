@@ -8,25 +8,6 @@ let topMenu
 let body
 
 /**
- * Inject options link in user menu
- * @param {Element} element
- */
-export const injectOptionsLink = (element) => {
-  const dropdownTopBlock = element.querySelector('div[class^=MiniProfile_dropdownTopBlock]')
-
-  if (!dropdownTopBlock) {
-    console.error('No dropdownTopBlock?')
-    return
-  }
-
-  // There is no user input for this call, this is safe
-  dropdownTopBlock.lastElementChild.insertAdjacentHTML('afterEnd', templates.optionsLink())
-
-  const optionsLink = dropdownTopBlock.querySelector('a#MB_options')
-  optionsLink.addEventListener('click', openOptionsPage)
-}
-
-/**
  * Prepares to inject VK player changes using one-time event listener
  * @param {Element} element `vk-video-player` node
  * @param {OptionsSync.UserOptions} options Extension options
