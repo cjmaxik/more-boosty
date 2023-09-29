@@ -96,7 +96,7 @@ export const videoDownloadModal = (links) => `
           </p>
       </div>
 
-      <div class="PopupContent_content_A2EA3" style="display: grid !important;">
+      <div class="PopupContent_content_A2EA3 MB_videoLinks" style="display: grid !important;">
           ${generateVideoDownloadLinks(links)}
       </div>
   </div>
@@ -104,7 +104,7 @@ export const videoDownloadModal = (links) => `
 `
 
 export const pipButton = () => `
-  <div class="container controls-element-indent-right v-1fkqq1h MB_pip">
+  <div class="container controls-element-indent-right v-1fkqq1h MB_pip" style="cursor: pointer">
       <div role="button" tabindex="0" title="${t('content_pip')}">
           <svg class="icon v-daygaf" xmlns="http://www.w3.org/2000/svg">
               <g fill="#fff" fill-rule="evenodd">
@@ -115,7 +115,7 @@ export const pipButton = () => `
   <div class="container controls-element v-1fkqq1h"></div>
 `
 export const downloadButton = () => `
-  <div class="container controls-element v-1fkqq1h MB_download">
+  <div class="container controls-element v-1fkqq1h MB_download" style="cursor: pointer">
       <div role="button" tabindex="0" title="${t('content_download')}">
           <svg class="icon v-daygaf" xmlns="http://www.w3.org/2000/svg">
               <g fill="#fff" fill-rule="evenodd">

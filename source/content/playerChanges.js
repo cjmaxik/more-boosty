@@ -405,7 +405,7 @@ const getContentMetadata = (playerWrapper) => {
   }
 
   // Post on main blog page
-  const postContent = playerRoot.closest('div[class*=Post_container_]')
+  const postContent = playerRoot.closest('div[class*=Post_root_]')
   if (postContent) {
     const postLink = postContent.querySelector('a[class*=CreatedAt_headerLink_]').href
     return generatePostMetadata(postLink)

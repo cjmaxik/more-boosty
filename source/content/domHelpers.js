@@ -13,7 +13,7 @@ let body
  * @param {OptionsSync.UserOptions} options Extension options
  */
 export const injectVkPlayerChanges = (element, options) => {
-  const playerWrapper = element.shadowRoot.querySelector('div.player-wrapper')
+  const playerWrapper = element.shadowRoot.querySelector('div.player-wrapper div.container')
 
   playerWrapper.addEventListener('click', (event) => {
     playerChanges.prepareVideoPlayer(event, options)
