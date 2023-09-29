@@ -1,24 +1,20 @@
 {
   "latest": {
     "ru": [
+      "Поддержка новой версии сайта."
+    ],
+    "en": [
+      "New website version support."
+    ]
+  },
+  "previous": {
+    "ru": [
       "Добавлена поддержка видео на вкладке Медиа.",
       "Добавлено уведомление о необходимости перезагрузить браузер при установке расширения."
     ],
     "en": [
       "Added support for videos on Media tab.",
       "Added \"Browser restart required\" notification on extension's install."
-    ]
-  },
-  "previous": {
-    "ru": [
-      "Исправлена проблема, когда видео/аудио начиналось сначала при наличии сохраненного места последнего воспроизведения.",
-      "Исправлена проблема, когда расширение могло пропускать блоки видео/аудио.",
-      "Исправлены стили режима театра."
-    ],
-    "en": [
-      "Fixed an issue when video/audio starts from the beginning while the last timestamp is present.",
-      "Fixed an issue when some video/audio blocks might be skipped.",
-      "Fixed styles in theater mode."
     ]
   },
   "track": {
