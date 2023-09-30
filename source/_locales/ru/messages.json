@@ -5,6 +5,12 @@
   "options_title": {
     "message": "Параметры"
   },
+  "options_restart_required": {
+    "message": "Необходима перезагрузка"
+  },
+  "options_restart_alert": {
+    "message": "Перезагрузите браузер перед использованием расширения!"
+  },
   "options_full_layout": {
     "message": "Широкоформатный режим"
   },

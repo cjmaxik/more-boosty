@@ -466,10 +466,17 @@ const getContentMetadata = (playerWrapper) => {
   }
 
   // Post on main blog page
-  const postContent = playerRoot.closest('div[class*=Post_container_]')
+  const postContent = playerRoot.closest('div[class*=Post_root_]')
   if (postContent) {
     const postLink = postContent.querySelector('a[class*=CreatedAt_headerLink_]').href
     return generatePostMetadata(postLink)
+  }
+
+  // Post in Media tab
+  const mediaContent = playerRoot.closest('div[class*=MediaViewer_root_]')
+  if (mediaContent) {
+    const mediaLink = mediaContent.querySelector('a[class*=GoToPostButton_link_]').href
+    return generatePostMetadata(mediaLink)
   }
 
   // Other cases (may be author bio or various blocks)

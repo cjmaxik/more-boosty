@@ -5,6 +5,12 @@
   "options_title": {
     "message": "Options"
   },
+  "options_restart_required": {
+    "message": "Restart required"
+  },
+  "options_restart_alert": {
+    "message": "Please restart the browser before using this extension!"
+  },
   "options_full_layout": {
     "message": "Widescreen layout"
   },

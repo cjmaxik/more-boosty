@@ -59,6 +59,8 @@ const injectExtensionIcon = () => {
  * Inject theater mode
  */
 const processTheaterMode = (isActive = null) => {
+  if (!options.theater_mode) return
+
   if (isActive) {
     domHelpers.injectStreamPageChanges(isActive)
     return
