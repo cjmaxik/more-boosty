@@ -18,25 +18,6 @@ const videoQuality = [
   '144p'
 ]
 
-const audioRate = [
-  '0.25',
-  '0.5',
-  '0.75',
-  '1',
-  '1.25',
-  '1.5',
-  '1.75',
-  '2',
-  '2.25',
-  '2.5',
-  '2.75',
-  '3',
-  '3.25',
-  '3.5',
-  '3.75',
-  '4'
-]
-
 // Dark mode
 if (window.matchMedia &&
   window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -89,33 +70,6 @@ const generateVideoQualityOptions = (options) => {
 }
 
 /**
- * Audio playback rate stuff
- */
-const audioRateOptions = document.getElementById('audio_playback_rate')
-const forceAudioRate = document.querySelector('input[name=force_audio_playback_rate]')
-
-const generateAudioRateOptions = (options) => {
-  audioRateOptions.disabled = !options.force_audio_playback_rate
-
-  for (const rate in audioRate) {
-    const option = document.createElement('option')
-    option.value = audioRate[rate]
-    option.innerText = audioRate[rate]
-    audioRateOptions.appendChild(option)
-  }
-
-  audioRateOptions.value = options.audio_playback_rate
-  audioRateOptions.addEventListener('change', (event) => {
-    event.preventDefault()
-    optionsStorage.set({ audio_playback_rate: audioRateOptions.value })
-  })
-
-  forceAudioRate.addEventListener('change', (event) => {
-    audioRateOptions.disabled = !event.currentTarget.checked
-  })
-}
-
-/**
  * Main function
  * @async
  */
@@ -125,7 +79,6 @@ const init = async () => {
   console.log(options)
 
   generateVideoQualityOptions(options)
-  generateAudioRateOptions(options)
 }
 
 init()

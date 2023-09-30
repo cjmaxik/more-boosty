@@ -107,11 +107,5 @@
   },
   "video_quality_tiny": {
     "message": "144p"
-  },
-  "options_force_audio_playback_rate": {
-    "message": "Change audio playback rate"
-  },
-  "options_audio_playback_rate": {
-    "message": "Playback rate"
   }
 }

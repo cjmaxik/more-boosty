@@ -172,6 +172,17 @@ export const audioSpeedController = (initialPlaybackRate) =>
   </div>
 `
 
+export const audioControlWrapper = (innerElement) =>`
+  <div class="audio_control_wrapper" style="
+      display: flex;
+      justify-content: center;
+      margin-left: auto;
+  ">
+    ${innerElement}
+  </div>
+`
+
+
 export const timestampIndicator = (position) => `
   <span class="MB_last_timestamp" style="
       display: block;

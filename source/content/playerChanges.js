@@ -2,6 +2,7 @@ import * as templates from './templates.js'
 import * as helpers from '../global/helpers.js'
 
 const contentCache = new Map()
+let previuosPlaybackRate = 1.0
 
 /**
  * Inject VK player changes
@@ -52,8 +53,11 @@ export const prepareVideoPlayer = async (event, options) => {
  * @param {OptionsSync.UserOptions} options Extension options
  */
 export const prepareAudioPlayer = async (element, options) => {
+
+  let playbackRate = await getPlaybackRate()
+
   // Inject controls
-  injectAudioControls(element, options)
+  injectAudioControls(element, playbackRate)
 
   // Save/retrieve timestamp
   if (options.save_last_timestamp) lastAudioTimestamp(element, options)
@@ -63,22 +67,18 @@ export const prepareAudioPlayer = async (element, options) => {
  * PRIVATE FUNCTIONS
  */
 
-const injectAudioControls = (element, options) => {
+const injectAudioControls = (element, playbackRate) => {
   const audio = element.querySelector('audio')
   const audioUrl = audio.src
   const playerTitle = element.querySelector('div[class*=AudioPlayer_title]')
 
   if (audioUrl) {
-    const playbackRate = options.force_audio_playback_rate ? options.audio_playback_rate : 1.0
-    const buttonsWrapper = document.createElement('div')
-    buttonsWrapper.style.display = 'flex'
-    buttonsWrapper.style.justifyContent = 'center'
-    buttonsWrapper.style.marginLeft = 'auto'
-    buttonsWrapper.innerHTML = templates.audioSpeedController(playbackRate) + templates.audioDownloadButton(audioUrl)
+    const audioControls = templates.audioSpeedController(playbackRate) + templates.audioDownloadButton(audioUrl)
+    const audioControlWrapper = templates.audioControlWrapper(audioControls)
     audio.playbackRate = playbackRate
 
     // Add speed control and download buttons to player title
-    playerTitle.insertAdjacentElement('afterend', buttonsWrapper)
+    playerTitle.insertAdjacentHTML('afterend', audioControlWrapper)
 
     const link = element.querySelector('div button.MB_audio_download')
     link.addEventListener('click', (event) => {
@@ -93,51 +93,38 @@ const injectAudioControls = (element, options) => {
     decreaseButton.addEventListener('click', (event) => {
       event.preventDefault()
       audio.playbackRate = (audio.playbackRate - 0.25 > 0.25) ? audio.playbackRate - 0.25 : 0.25
-
-      const currentPlaybackRateElements = document.querySelectorAll('span.Current_Playback_Rate')
-      currentPlaybackRateElements.forEach((element) => {
-        element.textContent = `x${audio.playbackRate}`
-      })
-
-      const currentAudioElements = document.querySelectorAll('audio')
-      currentAudioElements.forEach((element) => {
-        element.playbackRate = audio.playbackRate
-      })
+      changePlaybackRate(audio.playbackRate)
     })
 
     increaseButton.addEventListener('click', (event) => {
       event.preventDefault()
       audio.playbackRate = (audio.playbackRate + 0.25 < 4.0) ? audio.playbackRate + 0.25 : 4.0
-
-      const currentPlaybackRateElements = document.querySelectorAll('span.Current_Playback_Rate')
-      currentPlaybackRateElements.forEach((element) => {
-        element.textContent = `x${audio.playbackRate}`
-      })
-
-      const currentAudioElements = document.querySelectorAll('audio')
-      currentAudioElements.forEach((element) => {
-        element.playbackRate = audio.playbackRate
-      })
+      changePlaybackRate(audio.playbackRate)
     })
 
     playbackRateElement.addEventListener('click', (event) => {
       if (audio.playbackRate !== 1.0) {
-        audio.playbackRate = 1.0
+        changePlaybackRate(1.0)
       } else {
-        audio.playbackRate = playbackRate
+        changePlaybackRate(previuosPlaybackRate)
       }
-
-      const currentPlaybackRateElements = document.querySelectorAll('span.Current_Playback_Rate')
-      currentPlaybackRateElements.forEach((element) => {
-        element.textContent = `x${playbackRate}`
-      })
-
-      const currentAudioElements = document.querySelectorAll('audio')
-      currentAudioElements.forEach((element) => {
-        element.playbackRate = playbackRate
-      })
     })
   }
+}
+
+const changePlaybackRate = async(playbackRate) => {
+  const playbackRateDisplay = document.querySelectorAll('span.Current_Playback_Rate')
+  playbackRateDisplay.forEach((element) => {
+    element.textContent = `x${playbackRate}`
+  })
+
+  const audios = document.querySelectorAll('audio')
+  audios.forEach((audio) => {
+    previuosPlaybackRate = audio.playbackRate
+    audio.playbackRate = playbackRate
+  })
+
+  savePlaybackRate(playbackRate)
 }
 
 /**
@@ -361,6 +348,27 @@ const saveTimestamp = (id, timestamp) => {
     action: 'saveTimestamp',
     id,
     timestamp
+  })
+}
+
+/**
+ * Send a message to background script to get playback rate
+ * @returns {Float}
+ */
+const getPlaybackRate = async () => {
+  return await chrome.runtime.sendMessage({
+    action: 'getPlaybackRate'
+  })
+}
+
+/**
+ * Send a message to background script to save playback rate
+ * @param {Float} playback rate
+ */
+const savePlaybackRate = (playbackRate) => {
+  chrome.runtime.sendMessage({
+    action: 'savePlaybackRate',
+    playbackRate
   })
 }
 
