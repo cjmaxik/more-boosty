@@ -440,10 +440,8 @@ const playbackSpeedController = (playerWrapper, player, playbackRate) => {
   playbackRateElement.addEventListener('click', (event) => {
     event.preventDefault()
 
-    const currentPlayer = event.currentTarget.parentElement.parentElement.parentElement.parentElement.querySelector('video, audio')
-
     if (player.playbackRate !== 1.0) {
-      previuosPlaybackRate = currentPlayer.playbackRate
+      previuosPlaybackRate = player.playbackRate
       changePlaybackRate(1.0)
     } else {
       changePlaybackRate(previuosPlaybackRate)
