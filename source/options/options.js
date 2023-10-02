@@ -4,8 +4,8 @@ import './options.css'
 
 import optionsStorage from '../global/options-storage'
 
-// https://www.npmjs.com/package/@vkontakte/videoplayer-core
-// index.d.ts:4
+// https://www.npmjs.com/package/@vkontakte/videoplayer-shared?activeTab=code
+// index.d.ts:176
 const videoQuality = [
   // '4320p', // boosty does not support this resolution
   '2160p',
