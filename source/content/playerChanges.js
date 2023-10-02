@@ -335,7 +335,7 @@ const saveTimestamp = (id, timestamp) => {
 
 /**
  * Send a message to background script to get playback rate
- * @returns {Float}
+ * @returns {Number}
  */
 const getPlaybackRate = async () => {
   return await chrome.runtime.sendMessage({
@@ -345,7 +345,7 @@ const getPlaybackRate = async () => {
 
 /**
  * Send a message to background script to save playback rate
- * @param {Float} playback rate
+ * @param {Number} playback rate
  */
 const savePlaybackRate = (playbackRate) => {
   chrome.runtime.sendMessage({
