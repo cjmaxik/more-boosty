@@ -16,7 +16,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
 
     case 'retrieveTimestamp':
       retrieveTimestamp(message.id).then(data => {
-        let timestamp = 0 
+        let timestamp = 0
         if (data && data.data) {
           timestamp = data.data
         }
@@ -40,7 +40,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     case 'getPlaybackRate':
       getPlaybackRate().then(data => {
         let playbackRate = 1.0
-        if(data && data.data) {
+        if (data && data.data) {
           playbackRate = data.data
         }
 
@@ -150,18 +150,18 @@ const retrieveTimestamp = async (id) => {
 
 /**
  * Save the current playback rate
- * @param {Float} playbackRate
+ * @param {Number} playbackRate
  */
 const savePlaybackRate = async (playbackRate) => {
-  await Cache.write(`playbackRate`, playbackRate)
+  await Cache.write('playbackRate', playbackRate)
 }
 
 /**
  * Get playback rate
- * @returns {Float}
+ * @returns {Number}
  */
 const getPlaybackRate = async () => {
-  return await Cache.read(`playbackRate`)
+  return await Cache.read('playbackRate')
 }
 
 /**
