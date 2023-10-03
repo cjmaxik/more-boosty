@@ -1,7 +1,11 @@
 import * as templates from './templates.js'
 import * as helpers from '../global/helpers.js'
 
+// Content cache for videos
 const contentCache = new Map()
+
+// Previous playback rate for the speed controller
+let previuosPlaybackRate = 1.0
 
 /**
  * Inject VK player changes
@@ -35,8 +39,11 @@ export const prepareVideoPlayer = async (event, options) => {
     console.debug('contentCache', contentCache)
   }
 
+  // Get the last recorded playback rate
+  const playbackRate = await getPlaybackRate()
+
   // Inject controls
-  injectVideoControls(playerWrapper, contentMetadata.type !== 'unknown', options)
+  injectVideoControls(playerWrapper, contentMetadata.type !== 'unknown', playbackRate)
 
   // Force video quality
   if (options.force_video_quality) forceVideoQuality(playerWrapper, options.video_quality)
@@ -52,8 +59,11 @@ export const prepareVideoPlayer = async (event, options) => {
  * @param {OptionsSync.UserOptions} options Extension options
  */
 export const prepareAudioPlayer = async (element, options) => {
+  // Get the last recorded playback rate
+  const playbackRate = await getPlaybackRate()
+
   // Inject controls
-  injectAudioControls(element)
+  injectAudioControls(element, playbackRate)
 
   // Save/retrieve timestamp
   if (options.save_last_timestamp) lastAudioTimestamp(element, options)
@@ -63,15 +73,25 @@ export const prepareAudioPlayer = async (element, options) => {
  * PRIVATE FUNCTIONS
  */
 
-const injectAudioControls = (element) => {
-  const audio = element.querySelector('audio')
+/**
+ * Inject audio controls
+ * @param {Element} playerWrapper
+ * @param {Number} playbackRate
+ */
+const injectAudioControls = (playerWrapper, playbackRate) => {
+  const audio = playerWrapper.querySelector('audio')
   const audioUrl = audio.src
-  const playerTitle = element.querySelector('div[class*=AudioPlayer_title]')
+  const playerTitle = playerWrapper.querySelector('div[class*=AudioPlayer_title]')
 
   if (audioUrl) {
-    playerTitle.insertAdjacentHTML('afterEnd', templates.audioDownloadButton(audioUrl))
-    const link = element.querySelector('button.MB_audio_download')
+    const audioControls = templates.audioControls(audioUrl, playbackRate)
+    // Add speed control and download buttons to player title
+    playerTitle.insertAdjacentHTML('afterend', audioControls)
 
+    // Initialize playback speed controller
+    playbackSpeedController(playerWrapper, audio, playbackRate)
+
+    const link = playerWrapper.querySelector('button.MB_download')
     link.addEventListener('click', (event) => {
       event.preventDefault()
       generateDownloadLink(event)
@@ -83,22 +103,32 @@ const injectAudioControls = (element) => {
  * Inject VK player controls
  * @param {Element} playerWrapper
  * @param {boolean} canBeDownloaded
- * @param {OptionsSync.UserOptions} options
+ * @param {Number} playbackRate
  */
-const injectVideoControls = (playerWrapper, canBeDownloaded, options) => {
+const injectVideoControls = (playerWrapper, canBeDownloaded, playbackRate) => {
   const controls = playerWrapper.querySelector('div.controls')
 
   // Add PiP button (for supported browsers)
   if (document.pictureInPictureEnabled) {
-    controls.lastElementChild.insertAdjacentHTML('beforeBegin', templates.pipButton())
+    controls.lastElementChild.previousElementSibling.insertAdjacentHTML('beforeBegin', templates.pipButton())
     playerWrapper.querySelector('div.MB_pip').addEventListener('click', preparePip)
   }
 
   // Add Download button
   if (canBeDownloaded) {
-    controls.lastElementChild.insertAdjacentHTML('beforeBegin', templates.downloadButton())
+    controls.lastElementChild.previousElementSibling.insertAdjacentHTML('beforeBegin', templates.videoDownloadButton())
     playerWrapper.querySelector('div.MB_download').addEventListener('click', () => prepareVideoDownload(playerWrapper))
   }
+
+  // Add and initialize speed controller
+  controls.lastElementChild.previousElementSibling.insertAdjacentHTML('beforebegin', templates.videoSpeedController(playbackRate))
+  const player = playerWrapper.querySelector('video')
+  playbackSpeedController(playerWrapper, player, playbackRate)
+
+  // Remove indent from the fullscreen button
+  controls.lastElementChild.previousElementSibling
+    ?.classList.remove('controls-element-indent-right')
+    ?.classList.add('controls-element')
 }
 
 /**
@@ -304,6 +334,27 @@ const saveTimestamp = (id, timestamp) => {
 }
 
 /**
+ * Send a message to background script to get playback rate
+ * @returns {Number}
+ */
+const getPlaybackRate = async () => {
+  return await chrome.runtime.sendMessage({
+    action: 'getPlaybackRate'
+  })
+}
+
+/**
+ * Send a message to background script to save playback rate
+ * @param {Number} playback rate
+ */
+const savePlaybackRate = (playbackRate) => {
+  chrome.runtime.sendMessage({
+    action: 'savePlaybackRate',
+    playbackRate
+  })
+}
+
+/**
  * Retrieves an ID for the audio/video element
  * @param {Element} element
  * @returns
@@ -357,6 +408,87 @@ const forceVideoQuality = (player, videoQuality) => {
 
     itemQuality[0].click()
   }
+}
+
+/**
+ * Playback speed controller
+ * @param {Element} playerWrapper
+ * @param {Element} player
+ * @param {Number} playbackRate
+ */
+const playbackSpeedController = (playerWrapper, player, playbackRate) => {
+  const decreaseButton = playerWrapper.querySelector('.MB_speed_decrease')
+  const increaseButton = playerWrapper.querySelector('.MB_speed_increase')
+  const playbackRateElement = playerWrapper.querySelector('.MB_current_playback_rate')
+
+  player.playbackRate = playbackRate
+
+  decreaseButton.addEventListener('click', (event) => {
+    event.preventDefault()
+
+    player.playbackRate = (player.playbackRate - 0.25 > 0.25) ? player.playbackRate - 0.25 : 0.25
+    changePlaybackRate(player.playbackRate)
+  })
+
+  increaseButton.addEventListener('click', (event) => {
+    event.preventDefault()
+
+    player.playbackRate = (player.playbackRate + 0.25 < 4.0) ? player.playbackRate + 0.25 : 4.0
+    changePlaybackRate(player.playbackRate)
+  })
+
+  playbackRateElement.addEventListener('click', (event) => {
+    event.preventDefault()
+
+    if (player.playbackRate !== 1.0) {
+      previuosPlaybackRate = player.playbackRate
+      changePlaybackRate(1.0)
+    } else {
+      changePlaybackRate(previuosPlaybackRate)
+    }
+  })
+}
+
+/**
+ * Change playback rate
+ * @param {Number} playbackRate
+ */
+const changePlaybackRate = async (playbackRate) => {
+  const playersList = []
+  const displaysList = []
+
+  // Audio
+  const audioPlayers = document.querySelectorAll('audio')
+  audioPlayers.forEach((audio) => {
+    if (audio) playersList.push(audio)
+  })
+
+  const audioDisplays = document.querySelectorAll('.MB_current_playback_rate span')
+  audioDisplays.forEach((display) => {
+    if (display) displaysList.push(display)
+  })
+
+  // Video
+  const videoPlayers = document.querySelectorAll('vk-video-player')
+  for (const player of videoPlayers) {
+    const video = player.shadowRoot.querySelector('video')
+    if (video) playersList.push(video)
+
+    const display = player.shadowRoot.querySelector('.MB_current_playback_rate span')
+    if (display) displaysList.push(display)
+  }
+
+  // Change the playback speed
+  playersList.forEach((player) => {
+    player.playbackRate = playbackRate
+  })
+
+  // Change the display
+  displaysList.forEach((element) => {
+    element.textContent = `x${playbackRate}`
+  })
+
+  savePlaybackRate(playbackRate)
 }
 
 /**

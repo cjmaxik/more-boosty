@@ -104,43 +104,98 @@ export const videoDownloadModal = (links) => `
 `
 
 export const pipButton = () => `
-  <div class="container controls-element-indent-right v-1fkqq1h MB_pip" style="cursor: pointer">
+  <div class="container controls-element-indent-left controls-element-indent-right v-1r8g71r MB_pip" style="cursor: pointer">
       <div role="button" tabindex="0" title="${t('content_pip')}">
           <svg class="icon v-daygaf" xmlns="http://www.w3.org/2000/svg">
               <g fill="#fff" fill-rule="evenodd">
-              <path class="_enter" d="M18 11 10 11 10 17 18 17 18 11 18 11ZM22 19 22 4.98C22 3.88 21.1 3 20 3L2 3C.9 3 0 3.88 0 4.98L0 19C0 20.1.9 21 2 21L20 21C21.1 21 22 20.1 22 19L22 19ZM20 19.02 2 19.02 2 4.97 20 4.97 20 19.02 20 19.02Z"></path>
+                <path class="_enter" d="M18 11 10 11 10 17 18 17 18 11 18 11ZM22 19 22 4.98C22 3.88 21.1 3 20 3L2 3C.9 3 0 3.88 0 4.98L0 19C0 20.1.9 21 2 21L20 21C21.1 21 22 20.1 22 19L22 19ZM20 19.02 2 19.02 2 4.97 20 4.97 20 19.02 20 19.02Z">
+              </g>
           </svg>
       </div>
   </div>
-  <div class="container controls-element v-1fkqq1h"></div>
 `
-export const downloadButton = () => `
-  <div class="container controls-element v-1fkqq1h MB_download" style="cursor: pointer">
+
+export const videoDownloadButton = () => `
+  <div class="container controls-element-indent-right v-1r8g71r MB_download" style="cursor: pointer">
       <div role="button" tabindex="0" title="${t('content_download')}">
           <svg class="icon v-daygaf" xmlns="http://www.w3.org/2000/svg">
               <g fill="#fff" fill-rule="evenodd">
-              <path class="_enter" d="M5 21H19V19H5M19 10H15V3H9V10H5L12 17 19 10Z"></path>
+                <path class="_enter" d="M6 21H18A1 1 0 0018 19H6A1 1 0 006 21M19 10H15V3H9V10H5C7.3333 12.3333 9.6667 14.6667 12 17L19 10Z" />
+              </g>
           </svg>
       </div>
   </div>
-  <div class="container controls-element v-1fkqq1h"></div>
 `
 
-export const audioDownloadButton = (url) => `
-  <button
-    class="Link_block_f6iQc AudioPlayer_link_juPqV MB_audio_download"
-    style="background-color: initial !important; cursor: pointer !important;"
-    data-url="${url}"
-  >
-    <span class="Icon_block_Hvwi5 AudioPlayer_iconDownload_wqoN1 Messages_audioPlayerIconDownload_A3oqM">
-      <svg class="Icon_svg__DRUh">
-        <use xlink:href="#svg-icon-download">
-        </use>
+export const videoSpeedController = (initialPlaybackRate) => `
+  <div class="container controls-element v-1r8g71r MB_speed_decrease" style="cursor: pointer">
+    <div role="button" tabindex="0" title="${t('player_speed_decrease')}">
+      <svg class="icon v-daygaf" xmlns="http://www.w3.org/2000/svg">
+        <g fill="#fff" fill-rule="evenodd">
+          <path class="_enter" d="M20 12a1 1 0 01-1 1H5a1 1 0 110-2h14a1 1 0 011 1z" />
+        </g>
       </svg>
-    </span>
-  </button>
+    </div>
+  </div>
+
+  <div class="container controls-element v-1r8g71r MB_current_playback_rate" style="cursor: pointer;">
+    <div role="button" tabindex="0" title="${t('player_speed_reset')}" style="width: 40px; text-align: center;">
+        <span>
+          x${initialPlaybackRate}
+        </span>
+    </div>
+  </div>
+
+  <div class="container controls-element-indent-right v-1r8g71r MB_speed_increase" style="cursor: pointer">
+    <div role="button" tabindex="0" title="${t('player_speed_increase')}">
+      <svg class="icon v-daygaf" xmlns="http://www.w3.org/2000/svg">
+        <g fill="#fff" fill-rule="evenodd">
+          <path class="_enter" d="M20 12a1 1 0 01-1 1h-6v6A1 1 0 0112 20a1 1 0 01-1-1v-6h-6a1 1 0 110-2h6v-6A1 1 0 0112 4a1 1 0 011 1v6h6a1 1 0 011 1z" />
+        </g>
+      </svg>
+    </div>
+  </div>
 `
 
+export const audioControls = (url, initialPlaybackRate) => `
+  <div class="MB_speed_control_wrapper">
+    <div class="AudioPlayer_header_JEUAU MB_speed_controller">
+      <button class="Link_block_f6iQc MB_speed_decrease">
+        <span class="Icon_block_Hvwi5">
+          <svg class="Icon_svg__DRUh">
+            <path fill-rule="evenodd" d="M18 10a1 1 0 01-1 1H3a1 1 0 110-2h14a1 1 0 011 1z" />
+          </svg>
+        </span>
+      </button>
+
+      <div class="MB_current_playback_rate">
+        <span class="Icon_block_Hvwi5">
+          x${initialPlaybackRate}
+        </span>
+      </div>
+
+      <button class="Link_block_f6iQc MB_speed_increase">
+        <span class="Icon_block_Hvwi5">
+          <svg class="Icon_svg__DRUh">
+            <use xlink:href="#svg-icon-plus-default"></use>
+          </svg>
+        </span>
+      </button>
+    </div>
+
+    <div class="AudioPlayer_header_JEUAU">
+      <button class="Link_block_f6iQc AudioPlayer_link_juPqV MB_download" style="background-color: initial !important; cursor: pointer !important;" data-url="${url}">
+        <span class="Icon_block_Hvwi5 AudioPlayer_iconDownload_wqoN1 Messages_audioPlayerIconDownload_A3oqM">
+          <svg class="Icon_svg__DRUh">
+            <use xlink:href="#svg-icon-download"></use>
+          </svg>
+        </span>
+      </button>
+    </div>
+  </div>
+`
+
+// Do not extract the styles to content.scss
 export const timestampIndicator = (position) => `
   <span class="MB_last_timestamp" style="
       display: block;
