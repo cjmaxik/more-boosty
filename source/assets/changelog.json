@@ -1,33 +1,35 @@
 {
   "latest": {
     "ru": [
-      "Поддержка новой версии сайта."
+      "Изменение скорости воспроизведения аудио/видео. Огромное спасибо AnKh99 за идею и первоначальную реализацию!"
     ],
     "en": [
-      "New website version support."
+      "Variable audio/video playback rate. Huge thanks to AnKh99 for the idea and initial implementation!"
     ]
   },
   "previous": {
     "ru": [
+      "Поддержка новой версии сайта.",
       "Добавлена поддержка видео на вкладке Медиа.",
       "Добавлено уведомление о необходимости перезагрузить браузер при установке расширения."
     ],
     "en": [
+      "New website version support.",
       "Added support for videos on Media tab.",
       "Added \"Browser restart required\" notification on extension's install."
     ]
   },
   "track": {
-    "producer": "AbueKev, DJ Lugo",
-    "name": "Con Carino",
+    "producer": "Kre8r",
+    "name": "Lost In The Music",
     "links": [
       {
         "name": "YouTube",
-        "link": "https://youtu.be/_PRR-Ddqc-k?ref=more_boosty"
+        "link": "https://youtu.be/sq4Ywk9pTJY?ref=more_boosty"
       },
       {
         "name": "Spotify",
-        "link": "https://open.spotify.com/track/4OLubYZ8Z7yCwZVDYSu3mw?si=aab1837470c341cf&ref=more_boosty"
+        "link": "https://open.spotify.com/track/27AOEU4YFXsNtL5bOoD1Cj?si=0a2f91e840364bf9&ref=more_boosty"
       }
     ]
   }
