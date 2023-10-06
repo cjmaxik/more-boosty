@@ -1,10 +1,9 @@
 # ![logo](source/assets/icon24.png)ore Boosty
 
-# Бусти заблокировал мой аккаунт без объяснения причин. Обновлений расширения временно не будет
-
 > **More Boosty** - это браузерное расширение, улучшающее интерфейс и функции краудфандинговой платформы [Boosty](https://boosty.to) (Бусти)
 
-~~## [--> Поддержать проект на Бусти <--](https://boosty.to/cjmaxik)~~
+## [--> Поддержать проект через VK Donut <--](https://vk.com/donut/iamcjmaxik?ref=more_boosty)
+
 [README in English](./README-EN.md)
 
 # Возможности

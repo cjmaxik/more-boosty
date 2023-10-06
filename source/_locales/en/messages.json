@@ -47,8 +47,11 @@
   "options_saved": {
     "message": "Changes are saved automatically"
   },
-  "options_boosty_link": {
-    "message": "Support this project on Boosty!"
+  "options_donut_link": {
+    "message": "Donate!"
+  },
+  "options_support": {
+    "message": "News and support"
   },
   "options_github_link": {
     "message": "Source code"

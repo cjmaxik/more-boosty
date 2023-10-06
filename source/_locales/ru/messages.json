@@ -47,8 +47,11 @@
   "options_saved": {
     "message": "Изменения сохраняются автоматически"
   },
-  "options_boosty_link": {
-    "message": "Поддержи проект на Бусти!"
+  "options_donut_link": {
+    "message": "Задонатить!"
+  },
+  "options_support": {
+    "message": "Новости и поддержка"
   },
   "options_github_link": {
     "message": "Исходный код"

@@ -53,6 +53,13 @@ export const changelogModal = () => `
 
           <div class="PopupContent_content_A2EA3">
               <div>
+                <h2>⚠️ ВАЖНАЯ ИНФОРМАЦИЯ ⚠️</h2>
+                <p>
+                  6 октября 2023 года сайт Boosty заблокировал мой блог "в связи с нарушением условий пользования". <strong>Если в донатили мне после 20 сентября, обратитесь к поддержке Бусти за возвратом</strong> - я эти деньги не получил. Если вы хотите продолжать поддерживать проект, оформите донат через VK Donut (кнопка снизу). Новости расширения также будут публиковаться там!
+                </p>
+              </div>
+
+              <div>
                   <h2>🎉 ${t('changelog_latest_version')}</h2>
                   ${generateChangelogText('latest', uiLang)}
               </div>
@@ -69,8 +76,12 @@ export const changelogModal = () => `
           </div>
 
           <div class="ChangePhone_buttons_vP_uE Buttons_root_X0BDd">
-              <a href="https://boosty.to/cjmaxik?ref=more_boosty" rel="noreferref noopener nofollow" target="_blank" class="BaseButton_button_yO8r5 ContainedButton_button_mJG1l ContainedButton_colorDefault_fJta6">
-                  ${t('options_boosty_link')}
+              <a href="https://vk.com/donut/iamcjmaxik?ref=more_boosty" rel="noreferref noopener nofollow" target="_blank" class="BaseButton_button_yO8r5 ContainedButton_button_mJG1l ContainedButton_colorDefault_fJta6">
+                  ${t('options_donut_link')}
+              </a>
+
+              <a href="https://vk.com/iamcjmaxik?ref=more_boosty" rel="noreferref noopener nofollow" target="_blank" class="BaseButton_button_yO8r5 OutlinedButton_button_gVLJD">
+                  ${t('options_support')}
               </a>
 
               <a href="#" id="MB_optionsButton" class="BaseButton_button_yO8r5 OutlinedButton_button_gVLJD">

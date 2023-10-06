@@ -214,7 +214,7 @@ chrome.runtime.onInstalled.addListener((details) => {
     chrome.notifications.onButtonClicked.addListener(function (notifId, btnIdx) {
       if (notifId === notificationID) {
         if (btnIdx === 0) {
-          chrome.tabs.create({ url: 'https://boosty.to/cjmaxik#mb_update' })
+          chrome.tabs.create({ url: 'https://boosty.to/#mb_update' })
         }
       }
 
