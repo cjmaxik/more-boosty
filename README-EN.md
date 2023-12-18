@@ -1,3 +1,5 @@
+# Extension is no longer supported
+
 # ![logo](source/assets/icon24.png)ore Boosty
 
 > **More Boosty** is a browser extention which improves interface and functions of crowdfunding platform [Boosty](https://boosty.to)
